@@ -1,3 +1,5 @@
 #by DKZ
 
 index.wsgi
+
+static/node_modules
