@@ -1,5 +1,84 @@
 body {
-    /* set margin to 0 and overflow to hidden, to go fullscreen */
     margin: 0;
     overflow: hidden;
+    background-color: #ddd;
+}
+
+#title{
+    position:absolute;
+    color:white;
+    font-family: 'Lucida Console', Monaco, monospace;
+    font-size: 150px;
+    width:816px;
+    height: 150px;
+    margin-left: -408px;
+    margin-top: -75px;
+    top:45%;
+    left:50%;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+#footer a{
+    text-decoration: none;
+    color:white;
+    font-size: 16px;
+}
+#footer a:hover{
+    text-decoration: none;
+    color:#222;
+}
+
+#footer{
+    position:fixed;
+    bottom: 0px;
+    color:white;
+    font-family: Helvetica, Arial, SimHei, sans-serif;
+    margin:20px;
+    width: 100%;
+}
+#logo{
+    font-size: 25px;
+}
+#right{
+    float: right;
+    margin-top: 11px;
+    margin-right: 50px;
+}
+#left{
+    float:left;
+}
+
+#copyright{
+    font-size: 5px;
+}
+
+@-webkit-keyframes fadeOut {
+    0% {opacity:0;}
+    30%{opacity:0;}
+    50% {opacity:1;}
+    80%{opacity:1;}
+    100%{opacity:0;}
+}
+
+@keyframes fadeOut {
+    0% {opacity:0;}
+    30%{opacity:0;}
+    50% {opacity:1;}
+    80%{opacity:1;}
+    100%{opacity:0;}
+}
+
+.fadeOut {
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
+}
+
+.animated {
+  -webkit-animation-duration: 7s;
+  animation-duration: 7s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
 }

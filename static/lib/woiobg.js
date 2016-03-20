@@ -26,7 +26,7 @@ var woioBg=function(){
 }
 woioBg.prototype={
     init:function(){
-        this.renderer.setClearColor(new THREE.Color(0xEEEEEE),1.0);
+        this.renderer.setClearColor(new THREE.Color(0xdddddd),1.0);
         this.renderer.setSize(window.innerWidth,window.innerHeight);
         this.renderer.shadowMapEnabled=true;
 
@@ -102,23 +102,28 @@ woioBg.prototype={
     },
     avHeadUp:function(){
         var that=this;
-        setTimeout(function(){
-            var twRX=new TWEEN.Tween(that.wo.rotation)
+        var twRX=new TWEEN.Tween(that.wo.rotation)
+            .delay(2000)
             .to({x:degTorad(-4)},2000)
             .start();
-            var twZ=new TWEEN.Tween(that.wo.position)
+        var twZ=new TWEEN.Tween(that.wo.position)
+            .delay(2000)
             .to({z:0,y:-37},2000)
-            .start();
-            requestAnimationFrame(animate);
-            function animate(time) {
-                //stats.update();
-                if(woiobg.wo.position.z!==0){
-                    requestAnimationFrame(animate);
-                }
-                TWEEN.update(time);
+            .onUpdate(function(){
+                that.renderer.render(that.scene,that.camera);
+            })
+            .start()
+            .onStop(that.useControl)
+        requestAnimationFrame(animate);
+        function animate(time) {
+            //stats.update();
+            TWEEN.update(time);
+            if(woiobg.wo.position.z!==0){
+                requestAnimationFrame(animate);
+            }else{
+                twZ.stop();
             }
-            that.useControl();
-        },2000);
+        }
         
     },
     useControl:function(){
