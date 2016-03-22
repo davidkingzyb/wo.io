@@ -40,7 +40,7 @@ def doHelp(ttyarg='default'):
 'error':"""-wo.io: argument error 
 use -help find useable command""",
 'default':"""
-===================== help ==========================
+===================== HELPS ==========================
 -welcome             :show welcome infomation
 -help [command]      :show command help infomation
 -lsproject           :show DKZ's Project list
@@ -60,7 +60,8 @@ use -help find useable command""",
 -egretInit           :egret tool lib
 =====================================================
 """,
-'welcome':'-welcome show welcome infomation'
+'welcome'        :'-welcome     :show welcome infomation',
+'lsproject'      :'-lsproject   :show DKZ\'s Project list'
     }
     return switch.get(ttyarg,switch['error'])
 
@@ -142,14 +143,11 @@ use -help [arg] find useable command"""
 
 
 def test():
-    help=dotty('help')
-    print(help)
-    help_welcome=dotty('help welcome')
-    print(help_welcome)
-    xxx=dotty('xx fe')
-    print(xxx)
-    help_xxx=dotty('help fcc')
-    print(help_xxx)
+    tty=raw_input()
+    print(dotty(tty))
+    test()
+
+
 
 
 
