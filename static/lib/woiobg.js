@@ -71,12 +71,18 @@ woioBg.prototype={
         var loader=new THREE.OBJLoader();
         var that=this;
         loader.load('../static/res/'+filename+'.obj',function(o){ 
+            wtf.$('#loading').setAttribute('class','hidden');
             var materials=[new THREE.MeshLambertMaterial({color:0x999999})];
             var geom=o.children[0].geometry
             var mesh=THREE.SceneUtils.createMultiMaterialObject(geom,materials);
             mesh.castShadow=true;
             that['head']=mesh;
             that.onloaded();
+        },function(e){
+            //console.log(e.loaded+'/'+e.total);
+            wtf.$('#loading').innerHTML='WO loading '+e.loaded+'/'+e.total;
+        },function(e){
+            wtf.$('#loading').innerHTML='WO loading fail';
         })
     },
     loadEye:function(){
@@ -103,11 +109,11 @@ woioBg.prototype={
     avHeadUp:function(){
         var that=this;
         var twRX=new TWEEN.Tween(that.wo.rotation)
-            .delay(2000)
+            .delay(5000)
             .to({x:degTorad(-4)},2000)
             .start();
         var twZ=new TWEEN.Tween(that.wo.position)
-            .delay(2000)
+            .delay(5000)
             .to({z:0,y:-37},2000)
             .onUpdate(function(){
                 that.renderer.render(that.scene,that.camera);

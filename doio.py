@@ -31,6 +31,7 @@ def dotty(tty):
     'webtoolfunction':doWebToolFunction,
     'commentTitle':doCommentTitle,
     'canvasTrigger':doCanvasTrigger,
+    'all':doAll,
     }
 
     if len(ttyarr)>1:
@@ -180,7 +181,7 @@ def doWelcome(ttyarg='default'):
     Welcome=doCT('Welcome')
     t=doCT('to wo.io')
     switch={
-    'default':Welcome+t+'\n----------------------------------------- \n'+'date: '+commentTitle.date+'    &copy 2016 by DKZ'
+    'default':Welcome+t+'\n----------------------------------------- \n'+'date: '+commentTitle.date+'    &copy 2016 by DKZ'+'\ninput -help find help infomation'
     }
     return switch.get(ttyarg,switch['default'])
 
@@ -195,6 +196,12 @@ def doHome(ttyarg='default'):
     t=doCT('home')
     switch={
     'default':t+'\n --------------------------------- \n'+'DKZ\'s Home\n'+wrapTag('a','http://davidkingzyb.github.io/','href="http://davidkingzyb.github.io/"')
+    }
+    return switch.get(ttyarg,switch['default'])
+
+def doAll(ttyarg='default'):
+    switch={
+    'default':'todo'
     }
     return switch.get(ttyarg,switch['default'])
 

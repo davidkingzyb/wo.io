@@ -13,3 +13,14 @@ wtf.loadScript('../static/lib/woiobg.js',function(){
 });
 
 wtf.$('#title').setAttribute('class','animated fadeOut');
+
+setTimeout(function(){
+    wtf.$('#terminal').setAttribute('class','');
+    wtf.$('#input').focus();
+},10000);
+
+wtf.$('#input').onkeydown=function(e){
+    if(e.keyCode===13||e.which===13){
+        //console.log('input: ',wtf.$('#input').value)
+    }
+}

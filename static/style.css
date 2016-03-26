@@ -3,23 +3,87 @@ body {
     overflow: hidden;
     background-color: #ddd;
 }
-
-#title{
-    position:absolute;
+pre{
+    margin:0;
+}
+#WebGL-output{
+    z-index: 1;
+    position:fixed;
+    top:0px;
+    left:0px;
+}
+#container{
+    position:fixed;
+    z-index: 10;
+    width:100%;
+    height:100%;
     color:white;
     font-family: 'Lucida Console', Monaco, monospace;
+
+}
+#loading{
+    margin:0 auto;
+    text-align: center;
+    padding-top:15px;
+    font-size: 10px;
+}
+#title{
+    margin:0 auto;
     font-size: 150px;
-    width:816px;
-    height: 150px;
-    margin-left: -408px;
-    margin-top: -75px;
-    top:45%;
-    left:50%;
+    text-align: center;
+    padding:15%;
+}
+@media only screen and (min-width: 850px){
+    #terminal{
+        position:absolute;
+        width:800px;
+        height:550px;
+        left:50%;
+        bottom:100px;
+        margin-left: -400px;
+        background-color: rgba(10,10,10,0.1);
+        overflow:auto;
+    }
+}
+@media only screen and (max-width: 850px){
+    #terminal{
+        position:absolute;
+
+        height:85%;
+        bottom:100px;
+        width:90%;
+        margin-left: 5%;
+        background-color: rgba(10,10,10,0.1);
+        overflow:auto;
+    }
+}
+#terminal>pre{
+    position:absolute;
+    bottom:10px;
+    margin-left: 10px;
+    margin-right:10px;
+    
+}
+#terminal pre a{
+    color:white;
+}
+#terminal pre a:hover{
+    color:#222;
 }
 
+#input{
+    margin:0px;
+    padding:0px;
+    background-color: rgba(10,10,10,0.01);
+    border:0px;
+    color:white;
+    font-family: 'Lucida Console', Monaco, monospace;
+    outline:none;
+}
 .hidden{
     visibility: hidden;
 }
+
 
 #footer a{
     text-decoration: none;
@@ -32,6 +96,7 @@ body {
 }
 
 #footer{
+    z-index: 20;
     position:fixed;
     bottom: 0px;
     color:white;
