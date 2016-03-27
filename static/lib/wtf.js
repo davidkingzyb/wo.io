@@ -37,7 +37,23 @@ var wtf = (function () {
             }
         };
         xhr.open('POST', url, true);
+        xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         xhr.send(data);
+    };
+
+    wtf.ajax=function(url,data,callback){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                var resp = xhr.responseText;
+                callback(resp);
+            }
+            else {
+                console.log('fail' + xhr.status);
+            }
+        };
+        xhr.open('POST', url, true);
+        xhr.send(JSON.stringify(data));
     };
 
     wtf.htmlEscape = function (html) {

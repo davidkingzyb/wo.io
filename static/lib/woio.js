@@ -21,6 +21,24 @@ setTimeout(function(){
 
 wtf.$('#input').onkeydown=function(e){
     if(e.keyCode===13||e.which===13){
-        //console.log('input: ',wtf.$('#input').value)
+        var tty=wtf.$('#input').value;
+        wtf.$('#input').value='';
+        wtf.$('#show').innerHTML+='\n-'+tty+'\n';
+        wtf.post('io','tty='+tty,function(data){
+            var d=JSON.parse(data);
+            if(d.flag=='ok'){
+                wtf.$('#show').innerHTML+=d.output;
+            }
+        })
     }
+}
+
+function onAClick(t){
+    wtf.$('#show').innerHTML+='\n-'+t+'\n';
+    wtf.post('io','tty='+t,function(data){
+        var d=JSON.parse(data);
+        if(d.flag=='ok'){
+                wtf.$('#show').innerHTML+=d.output;
+            }
+    });
 }
