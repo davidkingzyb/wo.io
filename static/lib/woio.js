@@ -19,9 +19,13 @@ setTimeout(function(){
     wtf.$('#input').focus();
 },10000);
 
+var TTYARR=[];
+
 wtf.$('#input').onkeydown=function(e){
+    //console.log(e.keyCode)
     if(e.keyCode===13||e.which===13){
         var tty=wtf.$('#input').value;
+        TTYARR.push(tty);
         wtf.$('#input').value='';
         wtf.$('#show').innerHTML+='\n-'+tty+'\n';
         wtf.post('io','tty='+tty,function(data){
@@ -30,6 +34,20 @@ wtf.$('#input').onkeydown=function(e){
                 wtf.$('#show').innerHTML+=d.output;
             }
         })
+    }
+    if(e.keyCode===38||e.which===38){
+        if(TTYARR.length>=1){
+            TTYARR.unshift(wtf.$('#input').value);
+            var tty=TTYARR.pop();
+            wtf.$('#input').value=tty;
+        }
+    }
+    if(e.keyCode===40||e.which===40){
+        if(TTYARR.length>=1){
+            TTYARR.push(wtf.$('#input').value);
+            var tty=TTYARR.shift();
+            wtf.$('#input').value=tty;
+        }
     }
 }
 

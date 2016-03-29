@@ -39,7 +39,8 @@ pre{
         width:800px;
         height:550px;
         left:50%;
-        bottom:100px;
+        bottom:50%;
+        margin-bottom: -275px;
         margin-left: -400px;
         background-color: rgba(10,10,10,0.1);
         overflow:auto;
@@ -48,9 +49,9 @@ pre{
 @media only screen and (max-width: 850px){
     #terminal{
         position:absolute;
-
         height:85%;
-        bottom:100px;
+        bottom:50%;
+        margin-bottom: -275px;
         width:90%;
         margin-left: 5%;
         background-color: rgba(10,10,10,0.1);
@@ -146,4 +147,7 @@ pre{
   animation-duration: 7s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
+}
+.nullimg{
+    display: none;
 }
