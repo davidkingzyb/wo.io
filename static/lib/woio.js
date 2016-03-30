@@ -8,10 +8,6 @@
 /////////////////////////////////////////////////
 //  2016/03/20 by DKZ https://davidkingzyb.github.io
 
-wtf.loadScript('../static/lib/woiobg.js',function(){
-    console.log('woiobg load');
-});
-
 wtf.$('#title').setAttribute('class','animated fadeOut');
 
 setTimeout(function(){
@@ -60,3 +56,35 @@ function onAClick(t){
             }
     });
 }
+
+var ISBG=false;
+try{
+    wtf.loadScript('../static/lib/three.js',function(){
+        //console.log('load three.js');
+        wtf.loadScript('../static/lib/OBJLoader.js',function(){
+            //console.log('load OBJLoader.js');
+            wtf.loadScript('../static/lib/tween.min.js',function(){
+                //console.log('load tween.js');
+                wtf.loadScript('../static/lib/TrackballControls.js',function(){
+                    //console.log('load trackballcontrols.js');
+                    wtf.loadScript('../static/lib/woiobg.js',function(){
+                        console.log('woiobg ok');
+                        ISBG=true;
+                    });
+                });
+            });
+        });
+    });
+}catch(e){
+    console.log('woiobg fail');
+}
+
+
+
+
+
+
+
+
+
+

@@ -23,6 +23,7 @@ urlmap={
     'canvasTrigger':'https://github.com/davidkingzyb/canvasTrigger',
     'commentTitle':'https://github.com/davidkingzyb/commentTitle',
     'wtf':'https://github.com/davidkingzyb/WebToolFunction',
+    'woio':'http://dkzhome.sinaapp.com',
 }
 
 def dotty(tty):
@@ -46,6 +47,7 @@ def dotty(tty):
     'canvasTrigger':doCanvasTrigger,
     'all':doAll,
     'script':doScript,
+    'resume':doResume,
     }
 
     if len(ttyarr)>1:
@@ -70,6 +72,7 @@ use -help find useable command""",
 --------------------------------------------------
 -home                :DKZ's HOME
 -blog                :DKZ's BLOG 
+-resume              :DKZ's Resume
 --------------------------------------------------   
 -cubex3              :CubeX3 a indie game by DKZ
 -duibai [dialogue]   :search movie dialogue 
@@ -112,7 +115,7 @@ def doLsProject(ttyarg='default'):
 -duibai [dialogue]   :search movie dialogue 
 -zengxin             :DKZ's father paint page
 ---------------------- github --------------------
--canvasTrigger       :a canvas lib
+-canvasTrigger       :a canvas chart lib
 -wtf/webtoolfunction :useful web tool function lib
 -commentTitle        :big comment title 
 -egretInit           :egret tool lib
@@ -244,7 +247,13 @@ def doAll(ttyarg='default'):
 
     |%(WebToolFunction)s
 
-    |%(contact)s
+    |%(contact)s        |%(resume)s
+
+
+    |%(welcome)s
+
+    |%(lsproject)s      |%(all)s            |%(help)s         
+
 """%{
     'home':wrapTag('a','home','href="'+urlmap['home']+'"'),
     'blog':wrapTag('a','blog','href="'+urlmap['blog']+'"'),
@@ -255,13 +264,55 @@ def doAll(ttyarg='default'):
     'canvasTrigger':wrapTag('a','canvasTrigger','href="'+urlmap['canvasTrigger']+'"'),
     'commentTitle':wrapTag('a','commentTitle','href="'+urlmap['commentTitle']+'"'),
     'WebToolFunction':wrapTag('a','WebToolFunction','href="'+urlmap['wtf']+'"'),
-    'contact':wrapTag('a','contact','href="javascript:onAClick(\'contact\')"')
+    'contact':wrapTag('a','contact','href="javascript:onAClick(\'contact\')"'),
+    'resume':wrapTag('a','resume','href="javascript:onAClick(\'resume\')"'),
+    'welcome':wrapTag('a','welcome','href="javascript:onAClick(\'welcome\')"'),
+    'lsproject':wrapTag('a','lsproject','href="javascript:onAClick(\'lsproject\')"'),
+    'all':wrapTag('a','all','href="javascript:onAClick(\'all\')"'),
+    'help':wrapTag('a','help','href="javascript:onAClick(\'help\')"'),
 }
     }
     return switch.get(ttyarg,switch['default'])
 
 def doScript(ttyarg='alert("try -script alert(\"hello\")")'):
     return '<img src="null.gif" class="nullimg" onerror="'+ttyarg+'"/>'
+
+def doResume(ttyarg=''):
+    resume="""
+David K Zeng            `_______  `__   __  `_______  
+----------------------  |   __  \ |  | /  / |___   /  
+home.                   |  |  \  \|  |/  /     /  /   
+davidkingzyb.github.io  |  |  |  ||   _  \    /  /    
+email.                  |  |__|  ||  | \  \  /  /____ 
+davidkingzyb@qq.com     |________/|__|  \__\/________|
+========================================================
+  _____      ___  __  __ 
+ /  _  \ ___|   ||  | | | South China University 
+/  ____/|  ___  ||  |_| | of Technology      2011-2015
+\______/|_______||______|         B.Admin E-Commerce
+========================================================
+  _____   __  __ _______  
+ /  _  \ \  \/_/|   __  | 2011-2014
+/  ____/ _\  \  |    ___| BBT Art Design Department 
+\______//_/\__\ |___|      * Leader
+                           - post & web design                
+-------------------------------------------------------
+2015.4-12    MeiriQ Game          * Front-End Engineer
+              - HTML5 games develope
+-------------------------------------------------------
+2016.3-      Elitez               * Front-End Engineer
+              - Website develope                             
+=========================================================
+                             __                   
+ _______  __  __  _____     |__|  input 
+|   __  ||  |/_/ /     \    |  |       -lsproject
+|    ___||   |  |   o   |___|  | 
+|___|    |___|   \_____/ \_____/  to get project list
+=========================================================
+                     &copy;2016 by DKZ
+"""
+    return resume
+
 
 def onError(ttyarg='default'):
     return """-wo.io: command not found 
