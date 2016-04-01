@@ -46,7 +46,7 @@ def dotty(tty):
     'commentTitle':doCommentTitle,
     'canvasTrigger':doCanvasTrigger,
     'all':doAll,
-    'script':doScript,
+    'eval':doEval,
     'resume':doResume,
     }
 
@@ -66,7 +66,6 @@ use -help find useable command""",
 -lsproject           :show DKZ's Project list
 -all                 :show ALL 
 -ct [title]          :make a big comment title
--script [code]       :execute script
 --------------------------------------------------
 -contact             :show contact infomation
 --------------------------------------------------
@@ -99,7 +98,7 @@ use -help find useable command""",
 'commentTitle':'-commentTitle    :big comment title you can use -ct [title] try it \n <a href="'+urlmap['commentTitle']+'">'+urlmap['commentTitle']+'</a>',
 'egretInit':'-egretInit    :egret tool lib build egret project quickly \n <a href="'+urlmap['egretInit']+'">'+urlmap['egretInit']+'</a>',
 'all':'-all     :show ALL',
-'script':'-script      :execute script',
+'eval':'-eval      :execute script',
     }
     return switch.get(ttyarg,switch['error'])
 
@@ -274,8 +273,9 @@ def doAll(ttyarg='default'):
     }
     return switch.get(ttyarg,switch['default'])
 
-def doScript(ttyarg='alert("try -script alert(\"hello\")")'):
-    return '<img src="null.gif" class="nullimg" onerror="'+ttyarg+'"/>'
+def doEval(ttyarg='alert("try -eval alert(\"hello\")")'):
+    #return '<img src="null.gif" class="nullimg" onerror="'+ttyarg+'"/>'
+    return 'this is a test command'
 
 def doResume(ttyarg=''):
     resume="""
