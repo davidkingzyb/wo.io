@@ -14,7 +14,7 @@ import spiderman
 import json
 
 urlmap={
-    'home':'http://davidkingzyb.github.io',
+    'home':'http://davidkingzyb.github.io/home.html',
     'blog':'http://davidkingzyb.github.io/blog.html',
     'cubext':'http://cubex3.sinaapp.com',
     'duibai':'http://dialogue.sinaapp.com',
@@ -281,7 +281,7 @@ def doResume(ttyarg=''):
     resume="""
 David K Zeng            `_______  `__   __  `_______  
 ----------------------  |   __  \ |  | /  / |___   /  
-home.                   |  |  \  \|  |/  /     /  /   
+website.                |  |  \  \|  |/  /     /  /   
 davidkingzyb.github.io  |  |  |  ||   _  \    /  /    
 email.                  |  |__|  ||  | \  \  /  /____ 
 davidkingzyb@qq.com     |________/|__|  \__\/________|

@@ -37,7 +37,7 @@ def io():
 
 @app.route('/home')
 def home():
-    return redirect('https://davidkingzyb.github.io')
+    return redirect('https://davidkingzyb.github.io/home.html')
 
 @app.route('/blog')
 def blog():
