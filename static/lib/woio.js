@@ -57,6 +57,8 @@ function onAClick(t){
     });
 }
 
+onAClick('welcome');
+
 var ISBG=false;
 try{
     wtf.loadScript('../static/lib/three.js',function(){
