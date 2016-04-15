@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="../static/lib/show.js"></script>
+    <script type="text/javascript" src="../static/lib/wtf.js"></script>
+</head>
+<body>
+     <div id="loading">WO loading 0/0</div>
+        <div id="WebGL-output"></div>
+    <script type="text/javascript">
+        console.log(show.randomColor())
+var ISBG=false;
+try{
+    wtf.loadScript('../static/lib/three.js',function(){
+        //console.log('load three.js');
+        wtf.loadScript('../static/lib/OBJLoader.js',function(){
+            //console.log('load OBJLoader.js');
+            wtf.loadScript('../static/lib/tween.min.js',function(){
+                //console.log('load tween.js');
+                wtf.loadScript('../static/lib/TrackballControls.js',function(){
+                    //console.log('load trackballcontrols.js');
+                    wtf.loadScript('../static/lib/woiobg.js',function(){
+                        console.log('woiobg ok');
+                        ISBG=true;
+                        showing();
+                    });
+                });
+            });
+        });
+    });
+}catch(e){
+    console.log('woiobg fail');
+}
+function showing(){
+    show.init(woiobg);
+    show.changeEyeColor(show.randomColor())
+}
+    </script>
+</body>
+</html>
