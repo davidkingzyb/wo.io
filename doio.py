@@ -66,6 +66,7 @@ use -help find useable command""",
 -lsproject           :show DKZ's Project list
 -all                 :show ALL 
 -ct [title]          :make a big comment title
+-eval [script]       :execute script
 --------------------------------------------------
 -contact             :show contact infomation
 --------------------------------------------------
@@ -273,9 +274,9 @@ def doAll(ttyarg='default'):
     }
     return switch.get(ttyarg,switch['default'])
 
-def doEval(ttyarg='alert("try -eval alert(\"hello\")")'):
-    #return '<img src="null.gif" class="nullimg" onerror="'+ttyarg+'"/>'
-    return 'this is a test command'
+def doEval(ttyarg='alert("try -eval alert(“hello”)")'):
+    return 'click -> {{javascript:'+ttyarg+'}}'
+    #return 'this is a test command'
 
 def doResume(ttyarg=''):
     resume="""

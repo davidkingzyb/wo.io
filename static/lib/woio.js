@@ -15,6 +15,17 @@ setTimeout(function(){
     wtf.$('#input').focus();
 },10000);
 
+function doOutput(output){
+    var script=/{{javascript:.*?}}/.exec(output);
+    if(script.length>0){
+        var s=script[0].replace(/"/g,"'");
+        var outA=s.replace('{{','<a href="').replace('}}','">eval</a>')
+        output=output.replace(script[0],outA);
+        wtf.$id('scripts').innerHTML=s.replace('{{javascript:','<img src="null.png" onError="').replace('}}','">')
+    }
+    wtf.$('#show').innerHTML+=output;
+}
+
 var TTYARR=[];
 
 wtf.$('#input').onkeydown=function(e){
@@ -27,7 +38,7 @@ wtf.$('#input').onkeydown=function(e){
         wtf.post('io','tty='+tty,function(data){
             var d=JSON.parse(data);
             if(d.flag=='ok'){
-                wtf.$('#show').innerHTML+=d.output;
+                doOutput(d.output);
             }
         })
     }
