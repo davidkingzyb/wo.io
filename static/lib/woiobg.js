@@ -74,6 +74,7 @@ woioBg.prototype={
             wtf.$('#loading').setAttribute('class','hidden');
             var materials=[new THREE.MeshLambertMaterial({color:0x999999})];
             var geom=o.children[0].geometry
+            that['head_geom']=geom;
             var mesh=THREE.SceneUtils.createMultiMaterialObject(geom,materials);
             mesh.castShadow=true;
             that['head']=mesh;
@@ -91,6 +92,7 @@ woioBg.prototype={
         loader.load('../static/res/woioEye.obj',function(o){
             var materials=[new THREE.MeshLambertMaterial({color:0x666666})];
             var geom=o.children[0].geometry
+            that['eye_geom']=geom;
             var mesh=THREE.SceneUtils.createMultiMaterialObject(geom,materials);
             mesh.castShadow=true;
             that['eye']=mesh;
@@ -148,15 +150,6 @@ woioBg.prototype={
         render();
     }
 }
-
-// //debug stats
-// function initStats(){
-//     var stats=new Stats();
-//     stats.setMode(0);
-//     document.getElementById('Stats-output').appendChild(stats.domElement);
-//     return stats;
-// }
-// var stats=initStats();
 
 //main
 var woiobg=new woioBg();

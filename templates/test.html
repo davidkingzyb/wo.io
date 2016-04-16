@@ -3,12 +3,29 @@
 <head>
     <script type="text/javascript" src="../static/lib/show.js"></script>
     <script type="text/javascript" src="../static/lib/wtf.js"></script>
+    <script type="text/javascript" src="../static/lib/stats.js"></script>
+    <style type="text/css">
+body{margin: 0px;}
+#loading{position: absolute;right: 0px;}
+#Stats-output{position:absolute;}
+    </style>
 </head>
 <body>
-     <div id="loading">WO loading 0/0</div>
-        <div id="WebGL-output"></div>
+    <div id="loading">WO loading 0/0</div>
+    <div id="Stats-output"></div>
+    <div id="WebGL-output"></div>
     <script type="text/javascript">
-        console.log(show.randomColor())
+
+//debug stats
+function initStats(){
+    var stats=new Stats();
+    stats.setMode(0);
+    document.getElementById('Stats-output').appendChild(stats.domElement);
+    return stats;
+}
+var stats=initStats();
+
+//=====================woiobg===================
 var ISBG=false;
 try{
     wtf.loadScript('../static/lib/three.js',function(){
@@ -22,7 +39,6 @@ try{
                     wtf.loadScript('../static/lib/woiobg.js',function(){
                         console.log('woiobg ok');
                         ISBG=true;
-                        showing();
                     });
                 });
             });
@@ -31,9 +47,16 @@ try{
 }catch(e){
     console.log('woiobg fail');
 }
-function showing(){
-    show.init(woiobg);
-    show.changeEyeColor(show.randomColor())
+var showing;
+//==============show=======================
+function showTest(){
+    console.log('showing test')
+    showing=new show();
+    showing.init(woiobg);
+    showing.setEyeColor(show.randomColor());
+    showing.setHeadColor(show.randomColor());
+    showing.setWO('rotation',0,show.degTorad(139),0);
+    //showing.rotateWO(0,show.degTorad(1),0);
 }
     </script>
 </body>
