@@ -17,11 +17,13 @@ setTimeout(function(){
 
 function doOutput(output){
     var script=/{{javascript:.*?}}/.exec(output);
-    if(script.length>0){
-        var s=script[0].replace(/"/g,"'");
-        var outA=s.replace('{{','<a href="').replace('}}','">eval</a>')
-        output=output.replace(script[0],outA);
-        wtf.$id('scripts').innerHTML=s.replace('{{javascript:','<img src="null.png" onError="').replace('}}','">')
+    if(script){
+        if(script.length>0){
+            var s=script[0].replace(/"/g,"'");
+            var outA=s.replace('{{','<a href="').replace('}}','">eval</a>')
+            output=output.replace(script[0],outA);
+            wtf.$id('scripts').innerHTML=s.replace('{{javascript:','<img src="null.png" onError="').replace('}}','">')
+        } 
     }
     wtf.$('#show').innerHTML+=output;
 }
