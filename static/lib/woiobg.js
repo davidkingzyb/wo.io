@@ -8,6 +8,8 @@
 //  |___/\___| \_____/  |____|  |__| \_____/   // 
 /////////////////////////////////////////////////
 //  2016/03/05 by DKZ https://davidkingzyb.github.io
+var ISEYELOAD=false;
+var ISHEADLOAD=false;
 
 var woioBg=function(){
     this.scene=new THREE.Scene();
@@ -26,7 +28,7 @@ var woioBg=function(){
 }
 woioBg.prototype={
     init:function(){
-        this.renderer.setClearColor(new THREE.Color(0xdddddd),1.0);
+        this.renderer.setClearColor(new THREE.Color(0xcccccc),1.0);
         this.renderer.setSize(window.innerWidth,window.innerHeight);
         this.renderer.shadowMapEnabled=true;
 
@@ -67,7 +69,7 @@ woioBg.prototype={
 
         this.renderer.render(this.scene,this.camera);
     },
-    loadHead:function(filename){
+    loadHead:function(filename,cb){
         var loader=new THREE.OBJLoader();
         var that=this;
         loader.load('../static/res/'+filename+'.obj',function(o){ 
@@ -78,7 +80,8 @@ woioBg.prototype={
             var mesh=THREE.SceneUtils.createMultiMaterialObject(geom,materials);
             mesh.castShadow=true;
             that['head']=mesh;
-            that.onloaded();
+            ISHEADLOAD=true;
+            that.onloaded(cb);
         },function(e){
             //console.log(e.loaded+'/'+e.total);
             wtf.$('#loading').innerHTML='WO loading '+e.loaded+'/'+e.total;
@@ -96,9 +99,10 @@ woioBg.prototype={
             var mesh=THREE.SceneUtils.createMultiMaterialObject(geom,materials);
             mesh.castShadow=true;
             that['eye']=mesh;
+            ISEYELOAD=true;
         })
     },
-    onloaded:function(){
+    onloaded:function(cb){
         this.wo.scale.set(2.7,2.7,2.7);
         this.wo.position.set(0,-35,-40);
         this.wo.rotation.x=degTorad(28);
@@ -106,56 +110,12 @@ woioBg.prototype={
         this.wo.add(this.eye);
         this.scene.add(this.wo);
         this.renderer.render(this.scene,this.camera);
-        this.avHeadUp();
-    },
-    avHeadUp:function(){
-        var that=this;
-        var twRX=new TWEEN.Tween(that.wo.rotation)
-            .delay(5000)
-            .to({x:degTorad(-4)},2000)
-            .start();
-        var twZ=new TWEEN.Tween(that.wo.position)
-            .delay(5000)
-            .to({z:0,y:-37},2000)
-            .onUpdate(function(){
-                that.renderer.render(that.scene,that.camera);
-            })
-            .start()
-            .onStop(that.useControl)
-        requestAnimationFrame(animate);
-        function animate(time) {
-            //stats.update();
-            TWEEN.update(time);
-            if(woiobg.wo.position.z!==0){
-                requestAnimationFrame(animate);
-            }else{
-                twZ.stop();
-            }
+        if(cb){
+            cb.call(window);
         }
         
-    },
-    useControl:function(){
-        //track ball controls
-        var trackballcontrols=new THREE.TrackballControls(woiobg.camera);
-            trackballcontrols.rotateSpeed=1;
-            trackballcontrols.zoomSpeed=1;
-            trackballcontrols.panSpeed=1;
-        var clock=new THREE.Clock();
-        function render(){
-            var delta=clock.getDelta();
-            trackballcontrols.update(delta);
-            requestAnimationFrame(render);
-            woiobg.renderer.render(woiobg.scene,woiobg.camera);
-        }
-        render();
     }
 }
-
-//main
-var woiobg=new woioBg();
-woiobg.init();
-woiobg.loadEye();
-woiobg.loadHead('woioHigh');
 
 function degTorad(deg){
     return deg*Math.PI/180;

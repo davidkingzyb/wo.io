@@ -10,9 +10,22 @@
 
 wtf.$('#title').setAttribute('class','animated fadeOut');
 
+var isIOshow=false;
+function switchIO(){
+    if(isIOshow){
+        wtf.$('#terminal').setAttribute('class','hidden');
+        isIOshow=false;
+    }else{
+        wtf.$('#terminal').setAttribute('class','');
+        wtf.$('#input').focus();
+        isIOshow=true;
+    }  
+}
+
 setTimeout(function(){
-    wtf.$('#terminal').setAttribute('class','');
-    wtf.$('#input').focus();
+    if(!isIOshow){
+        switchIO();
+    }
 },10000);
 
 function doOutput(output){
@@ -61,37 +74,72 @@ wtf.$('#input').onkeydown=function(e){
 }
 
 function onAClick(t){
+    if(!isIOshow){
+        switchIO();
+    }
     wtf.$('#show').innerHTML+='\n-'+t+'\n';
     wtf.post('io','tty='+t,function(data){
         var d=JSON.parse(data);
         if(d.flag=='ok'){
-                wtf.$('#show').innerHTML+=d.output;
-            }
+            //wtf.$('#show').innerHTML+=d.output;
+            doOutput(d.output);
+        }
     });
 }
 
 onAClick('welcome');
+switchIO();
 
-var ISBG=false;
+var ISTHREELOAD=false;
+var ISOBJLOADERLOAD=false;
+var ISTBCTRLLOAD=false;
+var ISTWEENLOAD=false;
+var ISACLOAD=false;
+var ISBGLOAD=false;
+
+var woiobg;
 try{
     wtf.loadScript('../static/lib/three.js',function(){
-        //console.log('load three.js');
+        ISTWEENLOAD=true;
         wtf.loadScript('../static/lib/OBJLoader.js',function(){
-            //console.log('load OBJLoader.js');
-            wtf.loadScript('../static/lib/tween.min.js',function(){
-                //console.log('load tween.js');
-                wtf.loadScript('../static/lib/TrackballControls.js',function(){
-                    //console.log('load trackballcontrols.js');
-                    wtf.loadScript('../static/lib/woiobg.js',function(){
-                        console.log('woiobg ok');
-                        ISBG=true;
-                    });
-                });
-            });
-        });
-    });
+            ISOBJLOADERLOAD=true;
+            wtf.loadScript('../static/lib/woiobg.js',function(){
+                ISBGLOAD=true;
+
+//main
+woiobg=new woioBg();
+woiobg.init();
+woiobg.loadEye();
+woiobg.loadHead('woioHigh',showOn);
+
+
+            })
+        })
+        wtf.loadScript('../static/lib/TrackballControls.js',function(){
+            ISTBCTRLLOAD=true;
+        })
+        wtf.loadScript('../static/lib/tween.min.js',function(){
+            ISTWEENLOAD=true;
+        })
+        wtf.loadScript('../static/lib/animationCtrl.js',function(){
+            ISACLOAD=true;
+        })
+    })
 }catch(e){
     console.log('woiobg fail');
+}
+
+var showing;
+function showOn(){
+    console.log('show on')
+    wtf.loadScript('../static/lib/show.js',function(){
+        if(ISBGLOAD){
+            showing=new show(woiobg);
+            if(ISTWEENLOAD&&ISTBCTRLLOAD){
+                showing.init();
+            }
+        }
+    })
 }
 
 

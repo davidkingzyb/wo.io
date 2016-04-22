@@ -8,18 +8,80 @@
 /////////////////////////////////////////////////
 //  2016/04/15 by DKZ https://davidkingzyb.github.io
 var show=(function(){
-    function show(){
+    function show(woiobg){
+        this.woiobg=woiobg;
         //@woiobg
         //@anmt
         //@isanmtstart
     };
-    show.prototype.init=function(woiobg){
-        this.woiobg=woiobg;
-        var that=this;
-        wtf.loadScript('../static/lib/animationsCtrl.js',function(){
-            console.log('animationsCtrl ok')
-        })
+    show.prototype.init=function(){
+        var that=this.woiobg;
+
+        var twRX=new TWEEN.Tween(that.wo.rotation)
+            .delay(5000)
+            .to({x:degTorad(-4)},2000)
+            .start();
+        var twZ=new TWEEN.Tween(that.wo.position)
+            .delay(5000)
+            .to({z:0,y:-37},2000)
+            .onUpdate(function(){
+                that.renderer.render(that.scene,that.camera);
+            })
+            .start()
+            .onStop(show.TBCtrlInit)
+        requestAnimationFrame(animate);
+        function animate(time) {
+            //stats.update();
+            TWEEN.update(time);
+            if(woiobg.wo.position.z!==0){
+                requestAnimationFrame(animate);
+            }else{
+                twZ.stop();
+            }
+        }
     };
+    show.TBCtrlInit=function(){
+        var trackballcontrols=new THREE.TrackballControls(woiobg.camera);
+            trackballcontrols.rotateSpeed=1;
+            trackballcontrols.zoomSpeed=1;
+            trackballcontrols.panSpeed=1;
+        var clock=new THREE.Clock();
+        function render(){
+            var delta=clock.getDelta();
+            trackballcontrols.update(delta);
+            requestAnimationFrame(render);
+            woiobg.renderer.render(woiobg.scene,woiobg.camera);
+        }
+        render();
+    }
+    show.prototype.HeadUp=function(){
+        var that=this.woiobg;
+        //todo resetWO
+        that.wo.scale.set(2.7,2.7,2.7);
+        that.wo.position.set(0,-35,-40);
+        that.wo.rotation.x=degTorad(28);
+        that.renderer.render(that.scene,that.camera);
+        var twRX=new TWEEN.Tween(that.wo.rotation)
+            .to({x:degTorad(-4)},2000)
+            .start();
+        var twZ=new TWEEN.Tween(that.wo.position)
+            .to({z:0,y:-37},2000)
+            .onUpdate(function(){
+                that.renderer.render(that.scene,that.camera);
+            })
+            .start()
+        requestAnimationFrame(animate);
+        function animate(time) {
+            //stats.update();
+            TWEEN.update(time);
+            if(woiobg.wo.position.z!==0){
+                requestAnimationFrame(animate);
+            }else{
+                twZ.stop();
+            }
+        }
+
+    }
     show.prototype.anmtInit=function(){
         aC_startMainLoop();
         this.anmt=new animationCtrl();
@@ -56,6 +118,11 @@ var show=(function(){
         this.woiobg.wo.add(this.woiobg.head);
         this.woiobg.renderer.render(this.woiobg.scene,this.woiobg.camera);
     };
+    show.prototype.setBgColor=function(c){
+        this.woiobg.renderer.setClearColor(new THREE.Color(c),1.0);
+        this.woiobg.renderer.render(this.woiobg.scene,this.woiobg.camera);
+
+    }
     //@attr:str 'position'||'rotation'||'scale'
     show.prototype.setWO=function(attr,x,y,z){
         this.woiobg.wo[attr].set(x,y,z);
@@ -71,7 +138,7 @@ var show=(function(){
         }
         var i=0;
         var rotateloop=function(){
-            stats.update();
+            //stats.update();
             i++;
             this.woiobg.wo.rotation.x+=stepx;
             this.woiobg.wo.rotation.y+=stepy;
