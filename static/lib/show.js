@@ -7,9 +7,12 @@
 //  |___/\___| \_____/  |____|  |__| \_____/   //  
 /////////////////////////////////////////////////
 //  2016/04/15 by DKZ https://davidkingzyb.github.io
+var ISTBCTRLRUN=false;
+var stats;
 var show=(function(){
     function show(woiobg){
         this.woiobg=woiobg;
+        //stats=show.StatsInit();
         //@woiobg
         //@anmt
         //@isanmtstart
@@ -19,7 +22,7 @@ var show=(function(){
 
         var twRX=new TWEEN.Tween(that.wo.rotation)
             .delay(5000)
-            .to({x:degTorad(-4)},2000)
+            .to({x:show.degTorad(-4)},2000)
             .start();
         var twZ=new TWEEN.Tween(that.wo.position)
             .delay(5000)
@@ -31,7 +34,7 @@ var show=(function(){
             .onStop(show.TBCtrlInit)
         requestAnimationFrame(animate);
         function animate(time) {
-            //stats.update();
+            // stats.update();
             TWEEN.update(time);
             if(woiobg.wo.position.z!==0){
                 requestAnimationFrame(animate);
@@ -40,29 +43,61 @@ var show=(function(){
             }
         }
     };
-    show.TBCtrlInit=function(){
-        var trackballcontrols=new THREE.TrackballControls(woiobg.camera);
-            trackballcontrols.rotateSpeed=1;
-            trackballcontrols.zoomSpeed=1;
-            trackballcontrols.panSpeed=1;
-        var clock=new THREE.Clock();
-        function render(){
-            var delta=clock.getDelta();
-            trackballcontrols.update(delta);
-            requestAnimationFrame(render);
-            woiobg.renderer.render(woiobg.scene,woiobg.camera);
-        }
-        render();
+    show.StatsInit=function(){
+        wtf.loadScript('../static/lib/stats.js',function(){
+            stats=new Stats();
+            stats.setMode(0);
+            var Statsoutput=document.createElement('div');
+            Statsoutput.id='Stats-output';
+            Statsoutput.style.position='fixed';
+            Statsoutput.style.zIndex='99';
+            document.body.appendChild(Statsoutput);
+            document.getElementById('Stats-output').appendChild(stats.domElement);
+        })
+        
     }
+    show.TBCtrlInit=function(){
+        if(!ISTBCTRLRUN){
+            ISTBCTRLRUN=true;
+            var trackballcontrols=new THREE.TrackballControls(woiobg.camera);
+                trackballcontrols.rotateSpeed=1;
+                trackballcontrols.zoomSpeed=1;
+                trackballcontrols.panSpeed=1;
+            var clock=new THREE.Clock();
+            function render(){
+                // stats.update();
+                var delta=clock.getDelta();
+                trackballcontrols.update(delta);
+                if(ISTBCTRLRUN){
+                    requestAnimationFrame(render);
+                }
+                woiobg.renderer.render(woiobg.scene,woiobg.camera);
+            }
+            render();
+        }
+        
+    };
+    show.TBCtrlHalt=function(){
+        ISTBCTRLRUN=false;
+    }
+    show.prototype.resetWO=function(){
+        this.woiobg.wo.position.set(0,-37,0);
+        this.woiobg.wo.rotation.set(show.degTorad(-4),0,0)
+        this.woiobg.renderer.render(this.woiobg.scene,this.woiobg.camera);
+    };
+    show.prototype.resetMaterial=function(){
+        this.setEyeMaterial(0x666666);
+        this.setHeadMaterial(0x999999);
+        this.setBgColor(0xcccccc);
+    };
     show.prototype.HeadUp=function(){
         var that=this.woiobg;
-        //todo resetWO
         that.wo.scale.set(2.7,2.7,2.7);
         that.wo.position.set(0,-35,-40);
-        that.wo.rotation.x=degTorad(28);
+        that.wo.rotation.x=show.degTorad(28);
         that.renderer.render(that.scene,that.camera);
         var twRX=new TWEEN.Tween(that.wo.rotation)
-            .to({x:degTorad(-4)},2000)
+            .to({x:show.degTorad(-4)},2000)
             .start();
         var twZ=new TWEEN.Tween(that.wo.position)
             .to({z:0,y:-37},2000)
@@ -72,7 +107,7 @@ var show=(function(){
             .start()
         requestAnimationFrame(animate);
         function animate(time) {
-            //stats.update();
+            // stats.update();
             TWEEN.update(time);
             if(woiobg.wo.position.z!==0){
                 requestAnimationFrame(animate);
@@ -81,7 +116,7 @@ var show=(function(){
             }
         }
 
-    }
+    };
     show.prototype.anmtInit=function(){
         aC_startMainLoop();
         this.anmt=new animationCtrl();
@@ -93,6 +128,15 @@ var show=(function(){
         this.isanmtstart=false;
         aC_stopMainLoop();
         this.anmt=undefined;
+    };
+    show.showTitle=function(title){
+        wtf.$('#title').innerHTML=title;
+        wtf.$('#title').setAttribute('class','');
+        //wtf.$('#title').setAttribute('class','animated fadeOut');
+    };
+    show.hideTitle=function(){
+        wtf.$('#title').innerHTML='W O . I O';
+        wtf.$('#title').setAttribute('class','hidden');
     }
     show.randomColor=function(){
         return parseInt(Math.random()*0xFFFFFF,16);
@@ -100,8 +144,9 @@ var show=(function(){
     show.degTorad=function(deg){
         return deg*Math.PI/180;
     };
-    show.prototype.setEyeColor=function(c){
-        var materials=[new THREE.MeshLambertMaterial({color:c})];
+    show.prototype.setEyeMaterial=function(c,material){
+        var material=material||'Lambert';//Basic,Phong
+        var materials=[new THREE['Mesh'+material+'Material']({color:c})];
         var mesh=THREE.SceneUtils.createMultiMaterialObject(this.woiobg.eye_geom,materials);
         mesh.castShadow=true;
         this.woiobg.wo.remove(this.woiobg.eye)
@@ -109,8 +154,9 @@ var show=(function(){
         this.woiobg.wo.add(this.woiobg.eye);
         this.woiobg.renderer.render(this.woiobg.scene,this.woiobg.camera);
     };
-    show.prototype.setHeadColor=function(c){
-        var materials=[new THREE.MeshLambertMaterial({color:c})];
+    show.prototype.setHeadMaterial=function(c,material){
+        var material=material||'Lambert';//Basic,Phong
+        var materials=[new THREE['Mesh'+material+'Material']({color:c})];
         var mesh=THREE.SceneUtils.createMultiMaterialObject(this.woiobg.head_geom,materials);
         mesh.castShadow=true;
         this.woiobg.wo.remove(this.woiobg.head)
@@ -138,7 +184,7 @@ var show=(function(){
         }
         var i=0;
         var rotateloop=function(){
-            //stats.update();
+            // stats.update();
             i++;
             this.woiobg.wo.rotation.x+=stepx;
             this.woiobg.wo.rotation.y+=stepy;
@@ -148,11 +194,37 @@ var show=(function(){
                 this.anmt.off(rotateloop,this);
                 this.anmt.stop();
                 this.isanmtstart=false;
-                //this.anmtHalt();
+                
             }
         }
         this.anmt.on(rotateloop,this);
 
+    };
+    show.prototype.popWO=function(eyecolor,headcolor,bgcolor){
+        this.setEyeMaterial(eyecolor||show.randomColor());
+        this.setHeadMaterial(headcolor||show.randomColor());
+        this.setBgColor(bgcolor||show.randomColor());
+        this.setWO('position',-2+Math.random()*4,-39+Math.random()*4,-2+Math.random()*4);
+        this.setWO('rotation',show.degTorad(-4-10+20*Math.random()),show.degTorad(-10+20*Math.random()),show.degTorad(-10+20*Math.random()))
+        //show.showTitle('Pop.wo');
+    };
+    show.prototype.popShow=function(times){
+        var times=times||40;
+        var i=1;
+        var that=this;
+        show.showTitle('Pop.wo');
+        function popLoop(){
+            that.popWO();
+            i++;
+            if(i<=times){
+                setTimeout(popLoop,400)
+            }else{
+                show.hideTitle();
+                that.resetMaterial();
+                that.resetWO();
+            }
+        }
+        setTimeout(popLoop,400);
     }
     return show;
 })();

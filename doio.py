@@ -48,6 +48,7 @@ def dotty(tty):
     'all':doAll,
     'eval':doEval,
     'resume':doResume,
+    'wo':doWO,
     }
 
     if len(ttyarr)>1:
@@ -67,6 +68,7 @@ use -help find useable command""",
 -all                 :show ALL 
 -ct [title]          :make a big comment title
 -eval [script]       :execute script
+-wo                  :WO show
 --------------------------------------------------
 -contact             :show contact infomation
 --------------------------------------------------
@@ -100,6 +102,7 @@ use -help find useable command""",
 'egretInit':'-egretInit    :egret tool lib build egret project quickly \n <a href="'+urlmap['egretInit']+'">'+urlmap['egretInit']+'</a>',
 'all':'-all     :show ALL',
 'eval':'-eval      :execute script',
+'wo':'-wo [showfunction]      :exec wo show'
     }
     return switch.get(ttyarg,switch['error'])
 
@@ -250,7 +253,7 @@ def doAll(ttyarg='default'):
     |%(contact)s        |%(resume)s
 
 
-    |%(welcome)s
+    |%(welcome)s        |%(wo)s
 
     |%(lsproject)s      |%(all)s            |%(help)s         
 
@@ -270,7 +273,53 @@ def doAll(ttyarg='default'):
     'lsproject':wrapTag('a','lsproject','href="javascript:onAClick(\'lsproject\')"'),
     'all':wrapTag('a','all','href="javascript:onAClick(\'all\')"'),
     'help':wrapTag('a','help','href="javascript:onAClick(\'help\')"'),
+    'wo':wrapTag('a','wo','href="javascript:onAClick(\'wo\')"'),
 }
+    }
+    return switch.get(ttyarg,switch['default'])
+
+def doWO(ttyarg='default'):
+    switch={
+    'default':"""
+    |%(popShow)s         |%(popWO)s          |%(HeadUp)s
+
+    |%(rotateWO)s        |%(setWO)s          |%(resetWO)s
+
+    |%(setBgColor)s      |%(setHeadMaterial)s|%(setEyeMaterial)s
+
+    |%(showTitle)s       |%(hideTitle)s      
+
+    |%(TBCtrlInit)s      |%(TBCtrlHalt)s
+
+"""%{
+    'popShow':wrapTag('a','popShow','href="javascript:onAClick(\'wo popShow\')"'),
+    'popWO':wrapTag('a','popWO','href="javascript:onAClick(\'wo popWO\')"'),
+    'HeadUp':wrapTag('a','HeadUp','href="javascript:onAClick(\'wo HeadUp\')"'),
+    'rotateWO':wrapTag('a','rotateWO','href="javascript:onAClick(\'wo rotateWO\')"'),
+    'setWO':wrapTag('a','setWO','href="javascript:onAClick(\'wo setWO\')"'),
+    'resetWO':wrapTag('a','resetWO','href="javascript:onAClick(\'wo resetWO\')"'),
+    'setBgColor':wrapTag('a','setBgColor','href="javascript:onAClick(\'wo setBgColor\')"'),
+    'setHeadMaterial':wrapTag('a','setHeadMaterial','href="javascript:onAClick(\'wo setHeadMaterial\')"'),
+    'setEyeMaterial':wrapTag('a','setEyeMaterial','href="javascript:onAClick(\'wo setEyeMaterial\')"'),
+    'showTitle':wrapTag('a','showTitle','href="javascript:onAClick(\'wo showTitle\')"'),
+    'hideTitle':wrapTag('a','hideTitle','href="javascript:onAClick(\'wo hideTitle\')"'),
+    'TBCtrlInit':wrapTag('a','TBCtrlInit','href="javascript:onAClick(\'wo TBCtrlInit\')"'),
+    'TBCtrlHalt':wrapTag('a','TBCtrlHalt','href="javascript:onAClick(\'wo TBCtrlHalt\')"'),
+},
+    'popShow':'{{javascript:switchIO();showing.popShow();}}',
+    'popWO':'{{javascript:switchIO();showing.popWO();}}',
+    'HeadUp':'{{javascript:switchIO();showing.HeadUp();}}',
+    'rotateWO':'{{javascript:switchIO();showing.rotateWO(0,show.degTorad(1),0);}}',
+    'setWO':'{{javascript:switchIO();showing.setWO("rotation",0,0,0);}}',
+    'resetWO':'{{javascript:switchIO();showing.resetWO();}}',
+    'setBgColor':'{{javascript:switchIO();showing.setBgColor(show.randomColor());}}',
+    'setHeadMaterial':'{{javascript:switchIO();showing.setHeadMaterial(show.randomColor());}}',
+    'setEyeMaterial':'{{javascript:switchIO();showing.setEyeMaterial(show.randomColor());}}',
+    'showTitle':'{{javascript:switchIO();show.showTitle("wo show");}}',
+    'hideTitle':'{{javascript:switchIO();show.hideTitle();}}',
+    'TBCtrlInit':'{{javascript:switchIO();show.TBCtrlInit();}}',
+    'TBCtrlHalt':'{{javascript:switchIO();show.TBCtrlHalt();}}',
+
     }
     return switch.get(ttyarg,switch['default'])
 
