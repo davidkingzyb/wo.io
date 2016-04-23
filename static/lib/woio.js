@@ -131,7 +131,7 @@ woiobg.loadHead('woioHigh',showOn);
 
 var showing;
 function showOn(){
-    console.log('show on')
+    //console.log('show on')
     wtf.loadScript('../static/lib/show.js',function(){
         if(ISBGLOAD){
             showing=new show(woiobg);

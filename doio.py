@@ -281,11 +281,11 @@ def doAll(ttyarg='default'):
 def doWO(ttyarg='default'):
     switch={
     'default':"""
-    |%(popShow)s         |%(popWO)s          |%(HeadUp)s
+    |%(popShow)s         |%(popWO)s           |%(HeadUp)s
 
-    |%(rotateWO)s        |%(setWO)s          |%(resetWO)s
+    |%(rotateWO)s        |%(setWO)s           |%(resetWO)s
 
-    |%(setBgColor)s      |%(setHeadMaterial)s|%(setEyeMaterial)s
+    |%(setBgColor)s      |%(setHeadMaterial)s |%(setEyeMaterial)s
 
     |%(showTitle)s       |%(hideTitle)s      
 

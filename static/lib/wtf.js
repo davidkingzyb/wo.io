@@ -17,9 +17,11 @@ var wtf = (function () {
             if (xhr.readyState == 4) {
                 var resp = xhr.responseText;
                 callback(resp);
+            }else if(xhr.status==0||xhr.status==200){
+                //console.log('ok')
             }
             else {
-                console.log('fail' + xhr.status);
+                console.log('fail ' + xhr.status);
             }
         };
         xhr.open('GET', url, true);
@@ -31,31 +33,38 @@ var wtf = (function () {
             if (xhr.readyState == 4) {
                 var resp = xhr.responseText;
                 callback(resp);
+            }else if(xhr.status==0||xhr.status==200){
+                //console.log('ok')
             }
             else {
-                console.log('fail' + xhr.status);
+                console.log('fail ' + xhr.status);
             }
         };
         xhr.open('POST', url, true);
         xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         xhr.send(data);
     };
-
     wtf.ajax=function(url,data,callback){
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 var resp = xhr.responseText;
                 callback(resp);
+            }else if(xhr.status==0||xhr.status==200){
+                //console.log('ok')
             }
             else {
-                console.log('fail' + xhr.status);
+                console.log('fail ' + xhr.status);
             }
         };
         xhr.open('POST', url, true);
         xhr.send(JSON.stringify(data));
     };
 
+    //html 
+    wtf.wrapTag=function(tag,value,attr){
+        return '<'+tag+' '+attr+'>'+value+'</'+tag+'>';
+    };
     wtf.htmlEscape = function (html) {
         return html.replace(/&/g, '&amp;').replace(/\"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     };
@@ -96,6 +105,7 @@ var wtf = (function () {
             document.getElementsByTagName('head')[0].appendChild(cssLink);
         }
     };
+    
     //selector
     wtf.$$=function(selector){
         return document.querySelectorAll(selector);
