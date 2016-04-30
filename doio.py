@@ -49,6 +49,7 @@ def dotty(tty):
     'eval':doEval,
     'resume':doResume,
     'wo':doWO,
+    'cv':doResume,
     }
 
     if len(ttyarr)>1:
@@ -102,7 +103,9 @@ use -help find useable command""",
 'egretInit':'-egretInit    :egret tool lib build egret project quickly \n <a href="'+urlmap['egretInit']+'">'+urlmap['egretInit']+'</a>',
 'all':'-all     :show ALL',
 'eval':'-eval      :execute script',
-'wo':'-wo [showfunction]      :exec wo show'
+'wo':'-wo [showfunction]      :exec wo show',
+'cv':'-cv       :DKZ\'s resume',
+'resume':'-resume      :DKZ\'s resume',
     }
     return switch.get(ttyarg,switch['error'])
 

@@ -9,15 +9,8 @@
 #|_______| \_____/ |__|\/|__||__|\/|__|\______/|__| |__|\_____/   |__|   |__|\_____/|____|\______/
 ###################################################################################################
 #2015/10/25 by DKZ https://davidkingzyb.github.io
-
-
 import datetime
-import os
-
 date=datetime.datetime.now().strftime('%Y/%m/%d')
-INFO=date+' by DKZ https://davidkingzyb.github.io\n'
-
-
 dictionary={
 
     "A":["    __    ","   /  \\   ","  / /\\ \\  "," / /__\\ \\ ","/  ____  \\","__|    |__"],
@@ -127,44 +120,3 @@ def doComment(comment):
     return lines
 
 
-def save(filename,lines):
-    type=filename.split('.')[1]
-    
-    if type=='js' or type=='ts':
-        comment='//  '
-        lineA='/'*len(lines[0])+'////////\n'
-        lineZ=lineA
-    elif type=='py':
-        comment='#  '
-        lineA='#!/usr/bin/python3\n# -*- coding: UTF-8 -*-\n'+'#'*len(lines[0])+'######\n'
-        lineZ='#'*len(lines[0])+'######\n'
-
-    commentTitle=lineA
-    for l in lines:
-        commentTitle=commentTitle+comment+l+'  '+comment+'\n'
-    commentTitle=commentTitle+lineZ+comment+INFO
-
-    with open(filename,'wb') as f:
-        f.write(commentTitle.encode('utf-8'))
-
-def doSave(filename,lines):
-    if os.path.exists(filename):
-        with open(filename,'rb') as f:
-            con=f.read();
-        save(filename,lines)
-        with open(filename,'ab') as ff:
-            ff.write(con)
-    else:
-        save(filename,lines)
-
-
-if __name__ == '__main__':
-    
-    print("title:")
-    inputstr=input()
-    lines=doComment(inputstr)
-
-    print('file name:')
-    inputFileName=input()
-    doSave(inputFileName,lines)
-    print('ok')
