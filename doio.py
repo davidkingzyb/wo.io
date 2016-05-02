@@ -9,9 +9,12 @@
 #  |___/\___| \_____/  |____|  |__| \_____/   #  
 ###############################################
 #  2016/03/21 by DKZ https://davidkingzyb.github.io
-import commentTitle
+import clio
 import spiderman
 import json
+import datetime
+
+date=datetime.datetime.now().strftime('%Y/%m/%d')
 
 urlmap={
     'home':'http://davidkingzyb.github.io/home.html',
@@ -24,6 +27,7 @@ urlmap={
     'commentTitle':'https://github.com/davidkingzyb/commentTitle',
     'wtf':'https://github.com/davidkingzyb/WebToolFunction',
     'woio':'http://dkzhome.sinaapp.com',
+    'clio':'https://github.com/davidkingzyb/CLIO',
 }
 
 def dotty(tty):
@@ -35,6 +39,8 @@ def dotty(tty):
     'contact':doContact,
     'ct':doCT,
     'lsproject':doLsProject,
+    'lsproj':doLsProject,
+    'proj':doLsProject,
     'home':doHome,
     'blog':doBlog,
     'cubex3':doCubex3,
@@ -50,6 +56,7 @@ def dotty(tty):
     'resume':doResume,
     'wo':doWO,
     'cv':doResume,
+    'clio':doClio,
     }
 
     if len(ttyarr)>1:
@@ -85,10 +92,13 @@ use -help find useable command""",
 -wtf/webtoolfunction :useful web tool function lib
 -commentTitle        :big comment title 
 -egretInit           :egret tool lib
+-clio                :Command Line Interface Output
 ===================================================
 """,
 'welcome':'-welcome     :show welcome infomation',
 'lsproject':'-lsproject     :show DKZ\'s Project list',
+'lsproj':'-lsproj     :show DKZ\'s Project list',
+'proj':'-proj     :show DKZ\'s Project list',
 'ct':'-ct [commentTitle]   :make a big comment title (use commentTitle) \n arg:commentTitle',
 'contact':'-contact [qq/email/weibo/github]  :show contact infomation',
 'home':'-home     :DKZ\'s HOME \n <a href="'+urlmap['home']+'">'+urlmap['home']+'</a>',
@@ -106,6 +116,7 @@ use -help find useable command""",
 'wo':'-wo [showfunction]      :exec wo show',
 'cv':'-cv       :DKZ\'s resume',
 'resume':'-resume      :DKZ\'s resume',
+'clio':'-clio      :Command Line Interface Output',
     }
     return switch.get(ttyarg,switch['error'])
 
@@ -131,11 +142,7 @@ def doLsProject(ttyarg='default'):
     return switch.get(ttyarg,switch['default'])
 
 def doCT(ttyarg='your input error'):
-    s=''
-    l=commentTitle.doComment(ttyarg)
-    for x in l:
-        s =s +x+'\n'
-    return s
+    return clio.dotitle(ttyarg)
 
 def doZengXin(ttyarg='default'):
     t=doCT('ZengXin')
@@ -153,7 +160,7 @@ def doBlog(ttyarg='default'):
 
 def doDuibai(ttyarg='default'):
     t=doCT('duibai')
-    r=t+'\n --------------------------------- \n'+'search movie dialogue from duibai \ntry -duibai [dialogue] \n<a href="'+urlmap['duibai']+'">'+urlmap['duibai']+'</a>'
+    r=t+'\n --------------------------------- \n'+'- Movie dialogue search and share website\n- Using spider collect subtitle files and add them to database\n'+'search movie dialogue from duibai \ntry -duibai [dialogue] \n<a href="'+urlmap['duibai']+'">'+urlmap['duibai']+'</a>'
     if ttyarg=='default':
         return r
     else:
@@ -175,14 +182,14 @@ actor:%(actor)s
 def doCubex3(ttyarg='default'):
     t=doCT('CubeX3')
     switch={
-    'default':t+'\n --------------------------------- \n'+'a indie game by DKZ \n* construct puzzle game'+'\n<a href="'+urlmap['cubext']+'">'+urlmap['cubext']+'</a>'
+    'default':t+'\n --------------------------------- \n'+'a indie game by DKZ \n- construct puzzle game'+'\n- 2015 Egret Engine development competition the Best Creative Award nominations'+'\n- Include a virtual goods payment system build in the third-party payment platform PayPal’s API'+'\n<a href="'+urlmap['cubext']+'">'+urlmap['cubext']+'</a>'
     }
     return switch.get(ttyarg,switch['default'])
 
 def doEgretInit(ttyarg='default'):
     t=doCT('eI')
     switch={
-    'default':t+'\n --------------------------------- \n'+'build egret project quickly \n* some useful function in egret game engine \n* automatic define resoure \n* time base animation controler \n* debug tool'+'\n<a href="'+urlmap['egretInit']+'">'+urlmap['egretInit']+'</a>'
+    'default':t+'\n --------------------------------- \n'+'build egret project quickly \n- some useful function in egret game engine \n- automatic define resoure \n- time base animation controler \n- debug tool'+'\n<a href="'+urlmap['egretInit']+'">'+urlmap['egretInit']+'</a>'
     }
     return switch.get(ttyarg,switch['default'])
 
@@ -207,14 +214,21 @@ weibo  %(weibo)s
 def doCanvasTrigger(ttyarg='default'):
     t=doCT('cT')
     switch={
-    'default':t+'\n --------------------------------- \n'+'Canvas tools libary \n* For build canvas chart \n* define object and dispatch event to this object \n* Time-base animation controler \n'+wrapTag('a',urlmap['canvasTrigger'],'href="'+urlmap['canvasTrigger']+'"')
+    'default':t+'\n --------------------------------- \n'+'Canvas tools libary \n- For build canvas chart \n- define object and dispatch event to this object \n- Time-base animation controler \n'+wrapTag('a',urlmap['canvasTrigger'],'href="'+urlmap['canvasTrigger']+'"')
     }
     return switch.get(ttyarg,switch['default'])
 
 def doWebToolFunction(ttyarg='default'):
     t=doCT('wtf')
     switch={
-    'default':t+'\n --------------------------------- \n'+'some useful web tool function \n* wtf.js a web tool function javascript lib \n* init.less css init \n* spiderman.py a simple web spider \n* runServer.py a simple web server \n* wtf some useful python web tool function\n'+wrapTag('a',urlmap['wtf'],'href="'+urlmap['wtf']+'"')
+    'default':t+'\n --------------------------------- \n'+'some useful web tool function \n- wtf.js a web tool function javascript lib \n- init.less css init \n- spiderman.py a simple web spider \n- runServer.py a simple web server \n- wtf some useful python web tool function\n- bd.js a simple MVVM web framework\n'+wrapTag('a',urlmap['wtf'],'href="'+urlmap['wtf']+'"')
+    }
+    return switch.get(ttyarg,switch['default'])
+
+def doClio(ttyarg='default'):
+    t=doCT('CLIoutput')
+    switch={
+    'default':t+'\n --------------------------------- \n'+'Command Line Interface Output\n- a python lib for making CUI\n'+wrapTag('a',urlmap['clio'],'href="'+urlmap['clio']+'"')
     }
     return switch.get(ttyarg,switch['default'])
 
@@ -222,14 +236,14 @@ def doWelcome(ttyarg='default'):
     Welcome=doCT('Welcome')
     t=doCT('to wo.io')
     switch={
-    'default':Welcome+t+'\n----------------------------------------- \n'+'date: '+commentTitle.date+'    &copy 2016 by DKZ'+'\ninput -help find help infomation'
+    'default':Welcome+t+'\n----------------------------------------- \n'+'date: '+date+'    &copy 2016 by DKZ'+'\ninput -help find help infomation'
     }
     return switch.get(ttyarg,switch['default'])
 
 def doCommentTitle(ttyarg='default'):
     t=doCT('ct')
     switch={
-    'default':t+'\n --------------------------------- \n'+'make big comment title \ntry -ct [title] use commentTitle\n'+wrapTag('a',urlmap['commentTitle'],'href="'+urlmap['commentTitle']+'"')
+    'default':t+'\n --------------------------------- \n'+'make big comment title \nand add open sources licenses \ntry -ct [title] use commentTitle\n'+wrapTag('a',urlmap['commentTitle'],'href="'+urlmap['commentTitle']+'"')
     }
     return switch.get(ttyarg,switch['default'])
 
@@ -245,20 +259,20 @@ def doHome(ttyarg='default'):
 def doAll(ttyarg='default'):
     switch={
     'default':"""
-    |%(home)s           |%(blog)s
+    |%(home)s            |%(blog)s
 
-    |%(cubext)s         |%(duibai)s         |%(zengxin)s
+    |%(cubext)s          |%(duibai)s          |%(zengxin)s
 
-    |%(egretInit)s      |%(canvasTrigger)s  |%(commentTitle)s
+    |%(egretInit)s       |%(canvasTrigger)s   |%(commentTitle)s
 
-    |%(WebToolFunction)s
+    |%(WebToolFunction)s |%(CLIO)s
 
-    |%(contact)s        |%(resume)s
+    |%(contact)s         |%(resume)s
 
 
-    |%(welcome)s        |%(wo)s
+    |%(welcome)s         |%(wo)s
 
-    |%(lsproject)s      |%(all)s            |%(help)s         
+    |%(lsproject)s       |%(all)s             |%(help)s         
 
 """%{
     'home':wrapTag('a','home','href="'+urlmap['home']+'"'),
@@ -277,6 +291,7 @@ def doAll(ttyarg='default'):
     'all':wrapTag('a','all','href="javascript:onAClick(\'all\')"'),
     'help':wrapTag('a','help','href="javascript:onAClick(\'help\')"'),
     'wo':wrapTag('a','wo','href="javascript:onAClick(\'wo\')"'),
+    'CLIO':wrapTag('a','CLIO','href="'+urlmap['clio']+'"')
 }
     }
     return switch.get(ttyarg,switch['default'])
