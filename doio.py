@@ -13,22 +13,11 @@ import clio
 import spiderman
 import json
 import datetime
+import woiodata
 
 date=datetime.datetime.now().strftime('%Y/%m/%d')
 
-urlmap={
-    'home':'http://davidkingzyb.github.io/home.html',
-    'blog':'http://davidkingzyb.github.io/blog.html',
-    'cubext':'http://cubex3.sinaapp.com',
-    'duibai':'http://dialogue.sinaapp.com',
-    'zengxin':'http://zengxin.sinaapp.com',
-    'egretInit':'https://github.com/davidkingzyb/egretInit',
-    'canvasTrigger':'https://github.com/davidkingzyb/canvasTrigger',
-    'commentTitle':'https://github.com/davidkingzyb/commentTitle',
-    'wtf':'https://github.com/davidkingzyb/WebToolFunction',
-    'woio':'http://dkzhome.sinaapp.com',
-    'clio':'https://github.com/davidkingzyb/CLIO',
-}
+urlmap=woiodata.urlmap
 
 def dotty(tty):
     ttyarr=tty.split(' ')
@@ -57,6 +46,7 @@ def dotty(tty):
     'wo':doWO,
     'cv':doResume,
     'clio':doClio,
+    'cvfail':doCVFail,
     }
 
     if len(ttyarr)>1:
@@ -68,33 +58,7 @@ def doHelp(ttyarg='default'):
     switch={
 'error':"""-wo.io: argument error 
 use -help find useable command""",
-'default':"""
-===================== HELPS =======================
--welcome             :show welcome infomation
--help [command]      :show command help infomation
--lsproject           :show DKZ's Project list
--all                 :show ALL 
--ct [title]          :make a big comment title
--eval [script]       :execute script
--wo                  :WO show
---------------------------------------------------
--contact             :show contact infomation
---------------------------------------------------
--home                :DKZ's HOME
--blog                :DKZ's BLOG 
--resume              :DKZ's Resume
---------------------------------------------------   
--cubex3              :CubeX3 a indie game by DKZ
--duibai [dialogue]   :search movie dialogue 
--zengxin             :DKZ's father paint page
---------------------------------------------------
--canvasTrigger       :a canvas lib
--wtf/webtoolfunction :useful web tool function lib
--commentTitle        :big comment title 
--egretInit           :egret tool lib
--clio                :Command Line Interface Output
-===================================================
-""",
+'default':woiodata.help,
 'welcome':'-welcome     :show welcome infomation',
 'lsproject':'-lsproject     :show DKZ\'s Project list',
 'lsproj':'-lsproj     :show DKZ\'s Project list',
@@ -122,22 +86,7 @@ use -help find useable command""",
 
 def doLsProject(ttyarg='default'):
     switch={
-    'default':"""
-================= Project List ====================
--home                :DKZ's HOME
--blog                :DKZ's BLOG 
-*wo.io               :WO.IO
---------------------------------------------------   
--cubex3              :CubeX3 a indie game by DKZ
--duibai [dialogue]   :search movie dialogue 
--zengxin             :DKZ's father paint page
----------------------- github --------------------
--canvasTrigger       :a canvas chart lib
--wtf/webtoolfunction :useful web tool function lib
--commentTitle        :big comment title 
--egretInit           :egret tool lib
-===================================================
-""",
+    'default':woiodata.projls,
     }
     return switch.get(ttyarg,switch['default'])
 
@@ -195,16 +144,7 @@ def doEgretInit(ttyarg='default'):
 
 def doContact(ttyarg='default'):
     switch={
-    'default':"""
-DKZ
---------------------------
-email  davidkingzyb@qq.com
-qq     529166486
-weibo  %(weibo)s
---------------------------
-%(home)s
-%(github)s
-"""%{'home':wrapTag('a','home','href="'+urlmap['home']+'"'),
+    'default':woiodata.contact%{'home':wrapTag('a','home','href="'+urlmap['home']+'"'),
 'github':wrapTag('a','github','href="https://github.com/davidkingzyb"'),
 'weibo':wrapTag('a','@__DKZ__','href="http://weibo.com/davidkingzyb"')
 }
@@ -258,23 +198,7 @@ def doHome(ttyarg='default'):
 
 def doAll(ttyarg='default'):
     switch={
-    'default':"""
-    |%(home)s            |%(blog)s
-
-    |%(cubext)s          |%(duibai)s          |%(zengxin)s
-
-    |%(egretInit)s       |%(canvasTrigger)s   |%(commentTitle)s
-
-    |%(WebToolFunction)s |%(CLIO)s
-
-    |%(contact)s         |%(resume)s
-
-
-    |%(welcome)s         |%(wo)s
-
-    |%(lsproject)s       |%(all)s             |%(help)s         
-
-"""%{
+    'default':woiodata.All%{
     'home':wrapTag('a','home','href="'+urlmap['home']+'"'),
     'blog':wrapTag('a','blog','href="'+urlmap['blog']+'"'),
     'cubext':wrapTag('a','cubex3','href="'+urlmap['cubext']+'"'),
@@ -298,18 +222,7 @@ def doAll(ttyarg='default'):
 
 def doWO(ttyarg='default'):
     switch={
-    'default':"""
-    |%(popShow)s         |%(popWO)s           |%(HeadUp)s
-
-    |%(rotateWO)s        |%(setWO)s           |%(resetWO)s
-
-    |%(setBgColor)s      |%(setHeadMaterial)s |%(setEyeMaterial)s
-
-    |%(showTitle)s       |%(hideTitle)s      
-
-    |%(TBCtrlInit)s      |%(TBCtrlHalt)s
-
-"""%{
+    'default':woiodata.wo%{
     'popShow':wrapTag('a','popShow','href="javascript:onAClick(\'wo popShow\')"'),
     'popWO':wrapTag('a','popWO','href="javascript:onAClick(\'wo popWO\')"'),
     'HeadUp':wrapTag('a','HeadUp','href="javascript:onAClick(\'wo HeadUp\')"'),
@@ -346,40 +259,11 @@ def doEval(ttyarg='alert("try -eval alert(“hello”)")'):
     #return 'this is a test command'
 
 def doResume(ttyarg=''):
-    resume="""
-David K Zeng            `_______  `__   __  `_______  
-----------------------  |   __  \ |  | /  / |___   /  
-website.                |  |  \  \|  |/  /     /  /   
-davidkingzyb.github.io  |  |  |  ||   _  \    /  /    
-email.                  |  |__|  ||  | \  \  /  /____ 
-davidkingzyb@qq.com     |________/|__|  \__\/________|
-========================================================
-  _____      ___  __  __ 
- /  _  \ ___|   ||  | | | South China University 
-/  ____/|  ___  ||  |_| | of Technology      2011-2015
-\______/|_______||______|         B.Admin E-Commerce
-========================================================
-  _____   __  __ _______  
- /  _  \ \  \/_/|   __  | 2011-2014
-/  ____/ _\  \  |    ___| BBT Art Design Department 
-\______//_/\__\ |___|      * Leader
-                           - post & web design                
--------------------------------------------------------
-2015.4-12    MeiriQ Game          * Front-End Engineer
-              - HTML5 games develope
--------------------------------------------------------
-2016.3-      Elitez               * Front-End Engineer
-              - Website develope                             
-=========================================================
-                             __                   
- _______  __  __  _____     |__|  input 
-|   __  ||  |/_/ /     \    |  |       -lsproject
-|    ___||   |  |   o   |___|  | 
-|___|    |___|   \_____/ \_____/  to get project list
-=========================================================
-                     &copy;2016 by DKZ
-"""
+    resume=woiodata.resume
     return resume
+
+def doCVFail(ttyarg=''):
+    return woiodata.cvfail
 
 
 def onError(ttyarg='default'):
