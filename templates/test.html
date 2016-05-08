@@ -1,64 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Cache-Control" content="no-cache">                                                            
-    <script type="text/javascript" src="../static/lib/show.js"></script>
+    <title>WO.IO</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=0.8, minimum-scale=0.8, maximum-scale=0.8, user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
     <script type="text/javascript" src="../static/lib/wtf.js"></script>
-    <script type="text/javascript" src="../static/lib/stats.js"></script>
-    <style type="text/css">
-body{margin: 0px;}
-#loading{position: absolute;right: 0px;}
-#Stats-output{position:absolute;}
-    </style>
+
 </head>
 <body>
-    <div id="loading">WO loading 0/0</div>
-    <div id="Stats-output"></div>
+    <div id="container">
+        <div id="loading">WO loading 0/0</div>
+        <div id="title" class="hidden">W O . I O</div>
+        <div id="terminal" class="hidden">
+            <pre >
+                <pre id="show">
+</pre>-<input type="text" id="input" size="50">
+</pre>
+                
+
+            
+        </div>
+
+    </div>
+    <div id="footer">
+        <div id="left">
+            <span id="logo">&nbsp;&nbsp;&nbsp;&nbsp;WO.IO&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <a id="all" href="javascript:onAClick('all')">| all</a>&nbsp;&nbsp;
+            <a id="help" href="javascript:onAClick('help')">| help</a>&nbsp;&nbsp;
+            <a id="wo" href="javascript:onAClick('wo')">| wo</a>&nbsp;&nbsp;
+            <a id="io" href="javascript:switchIO()">| io</a>&nbsp;&nbsp;
+        </div>
+        <div id="right">
+            <a href="http://davidkingzyb.github.io/home.html">| home</a>&nbsp;&nbsp;
+            <a href="http://davidkingzyb.github.io/blog.html">| blog</a>&nbsp;&nbsp;
+            <a id="contact" href="javascript:onAClick('contact')">| contact</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span id="copyright">&copy;2016 by DKZ</span>
+        </div>
+        
+    </div>
+    <div id="scripts" style="display:none"></div>
     <div id="WebGL-output"></div>
-    <script type="text/javascript">
+    <script type="text/javascript" src="../static/lib/woio.js"></script>
+<script id="fragment-shader-1" type="x-shader/x-fragment">
+    precision highp float;
+    uniform float time;
+    uniform float alpha;
+    uniform vec2 resolution;
+    varying vec2 vUv;
 
-//debug stats
-function initStats(){
-    var stats=new Stats();
-    stats.setMode(0);
-    document.getElementById('Stats-output').appendChild(stats.domElement);
-    return stats;
-}
-var stats=initStats();
+    void main2(void)
+    {
+    vec2 position = vUv;
+    float red = 1.0;
+    float green = 0.25 + sin(time) * 0.25;
+    float blue = 0.0;
+    vec3 rgb = vec3(red, green, blue);
+    vec4 color = vec4(rgb, alpha);
+    gl_FragColor = color;
+    }
 
-//=====================woiobg===================
-var ISBG=false;
-try{
-    wtf.loadScript('../static/lib/three.js',function(){
-        //console.log('load three.js');
-        wtf.loadScript('../static/lib/OBJLoader.js',function(){
-            //console.log('load OBJLoader.js');
-            wtf.loadScript('../static/lib/tween.min.js',function(){
-                //console.log('load tween.js');
-                wtf.loadScript('../static/lib/TrackballControls.js',function(){
-                    //console.log('load trackballcontrols.js');
-                    wtf.loadScript('../static/lib/woiobg.js',function(){
-                        console.log('woiobg ok');
-                        ISBG=true;
-                    });
-                });
-            });
-        });
-    });
-}catch(e){
-    console.log('woiobg fail');
-}
-var showing;
-//==============show=======================
-function showTest(){
-    console.log('showing test')
-    showing=new show();
-    showing.init(woiobg);
-    showing.setEyeColor(show.randomColor());
-    showing.setHeadColor(show.randomColor());
-    showing.setWO('rotation',0,show.degTorad(139),0);
-    //showing.rotateWO(0,show.degTorad(1),0);
-}
-    </script>
+    #define PI 3.14159
+    #define TWO_PI (PI*2.0)
+    #define N 68.5
+
+    void main(void)
+    {
+    vec2 center = (gl_FragCoord.xy);
+    center.x=-10.12*sin(time/200.0);
+    center.y=-10.12*cos(time/200.0);
+
+    vec2 v = (gl_FragCoord.xy - resolution/20.0) / min(resolution.y,resolution.x) * 15.0;
+    v.x=v.x-10.0;
+    v.y=v.y-200.0;
+    float col = 0.0;
+
+    for(float i = 0.0; i < N; i++)
+    {
+    float a = i * (TWO_PI/N) * 61.95;
+    col += cos(TWO_PI*(v.y * cos(a) + v.x * sin(a) + sin(time*0.004)*100.0 ));
+    }
+
+    col /= 5.0;
+
+    gl_FragColor = vec4(col*1.0, -col*1.0,-col*4.0, 1.0);
+    }
+
+
+</script>
+    
+
 </body>
-</html>
+
+</html>  

@@ -129,6 +129,43 @@ var show=(function(){
         aC_stopMainLoop();
         this.anmt=undefined;
     };
+    show.createFragShader=function(fs){
+        var attributes = {};
+        var uniforms = {
+            time: {type: 'f', value: 0.2},
+            scale: {type: 'f', value: 0.2},
+            alpha: {type: 'f', value: 0.6},
+            resolution: {type: "v2", value: new THREE.Vector2()}
+        };
+
+        uniforms.resolution.value.x = window.innerWidth;
+        uniforms.resolution.value.y = window.innerHeight;
+        var meshMaterial = new THREE.ShaderMaterial({
+            uniforms: uniforms,
+            attributes: attributes,
+            fragmentShader: fs,
+            transparent: true
+
+        });
+        return meshMaterial;
+    };
+
+    show.prototype.setEyeFragShader=function(fs){
+        var materials=[show.createFragShader(fs)];
+        var mesh=THREE.SceneUtils.createMultiMaterialObject(this.woiobg.eye_geom,materials);
+        this.woiobg.wo.remove(this.woiobg.eye);
+        this.woiobg.eye=mesh;
+        this.woiobg.wo.add(this.woiobg.eye);
+        this.woiobg.renderer.render(this.woiobg.scene,this.woiobg.camera);
+    };
+    show.prototype.setHeadFragShader=function(fs){
+        var materials=[show.createFragShader(fs)];
+        var mesh=THREE.SceneUtils.createMultiMaterialObject(this.woiobg.head_geom,materials);
+        this.woiobg.wo.remove(this.woiobg.head);
+        this.woiobg.head=mesh;
+        this.woiobg.wo.add(this.woiobg.head);
+        this.woiobg.renderer.render(this.woiobg.scene,this.woiobg.camera);
+    }
     show.showTitle=function(title){
         wtf.$('#title').innerHTML=title;
         wtf.$('#title').setAttribute('class','');
