@@ -149,7 +149,22 @@ var show=(function(){
         });
         return meshMaterial;
     };
-
+    show.prototype.fragShaderRender=function(shadermaterial){
+        if(!this.anmt){
+            this.anmtInit();
+        }
+        if(!this.isanmtstart){
+            this.anmt.start();
+            this.isanmtstart=true;
+        }
+        var rd=function(){
+            //stats&&stats.update();
+            shadermaterial.uniforms.time.value+=0.01;
+            this.woiobg.renderer.render(this.woiobg.scene,this.woiobg.camera);
+        }
+        this.anmt.on(rd,this);
+        
+    }
     show.prototype.setEyeFragShader=function(fs){
         var materials=[show.createFragShader(fs)];
         var mesh=THREE.SceneUtils.createMultiMaterialObject(this.woiobg.eye_geom,materials);
@@ -157,6 +172,7 @@ var show=(function(){
         this.woiobg.eye=mesh;
         this.woiobg.wo.add(this.woiobg.eye);
         this.woiobg.renderer.render(this.woiobg.scene,this.woiobg.camera);
+        //console.log(this.woiobg.eye)
     };
     show.prototype.setHeadFragShader=function(fs){
         var materials=[show.createFragShader(fs)];
