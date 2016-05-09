@@ -85,13 +85,20 @@ weibo  %(weibo)s
 """
 
 wo="""
-    |%(popShow)s         |%(popWO)s           |%(HeadUp)s
 
-    |%(rotateWO)s        |%(setWO)s           |%(resetWO)s
+    |%(EyeFragShader)s   |%(EyeFSRandom)s     |%(HeadFSRandom)s
+
+    |%(popShow)s         |%(popWO)s           
+
+    |%(HeadUp)s          |%(rotateWO)s   
+
+
+    |%(setWO)s           |%(resetWO)s
 
     |%(setBgColor)s      |%(setHeadMaterial)s |%(setEyeMaterial)s
 
-    |%(showTitle)s       |%(hideTitle)s      
+    |%(showTitle)s       |%(hideTitle)s  
+
 
     |%(TBCtrlInit)s      |%(TBCtrlHalt)s
 
@@ -159,3 +166,4 @@ cvfail="""
 - 2016/3            :tencent douyu netease ... !alog
 --------------------------------------------------------------
 """
+

@@ -14,6 +14,8 @@ import spiderman
 import json
 import datetime
 import woiodata
+import random
+
 
 date=datetime.datetime.now().strftime('%Y/%m/%d')
 
@@ -223,6 +225,9 @@ def doAll(ttyarg='default'):
 def doWO(ttyarg='default'):
     switch={
     'default':woiodata.wo%{
+    'EyeFragShader':wrapTag('a','EyeFragShader','href="javascript:onAClick(\'wo EyeFragShader\')"'),
+    'EyeFSRandom':wrapTag('a','EyeFSRandom','href="javascript:onAClick(\'wo EyeFSRandom\')"'),
+    'HeadFSRandom':wrapTag('a','HeadFSRandom','href="javascript:onAClick(\'wo HeadFSRandom\')"'),
     'popShow':wrapTag('a','popShow','href="javascript:onAClick(\'wo popShow\')"'),
     'popWO':wrapTag('a','popWO','href="javascript:onAClick(\'wo popWO\')"'),
     'HeadUp':wrapTag('a','HeadUp','href="javascript:onAClick(\'wo HeadUp\')"'),
@@ -237,6 +242,9 @@ def doWO(ttyarg='default'):
     'TBCtrlInit':wrapTag('a','TBCtrlInit','href="javascript:onAClick(\'wo TBCtrlInit\')"'),
     'TBCtrlHalt':wrapTag('a','TBCtrlHalt','href="javascript:onAClick(\'wo TBCtrlHalt\')"'),
 },
+    'EyeFragShader':'{{javascript:showing.setEyeFragShader(fs1);showing.fragShaderRender(showing.woiobg.eye.children[0].material);}}',
+    'EyeFSRandom':'{{javascript:showing.setEyeFragShader(fs'+str(random.random()*6+1)[0:1]+');showing.fragShaderRender(showing.woiobg.eye.children[0].material);}}',
+    'HeadFSRandom':'{{javascript:showing.setHeadFragShader(fs'+str(random.random()*6+1)[0:1]+');showing.fragShaderRender(showing.woiobg.head.children[0].material);}}',
     'popShow':'{{javascript:switchIO();showing.popShow();}}',
     'popWO':'{{javascript:switchIO();showing.popWO();}}',
     'HeadUp':'{{javascript:switchIO();showing.HeadUp();}}',
