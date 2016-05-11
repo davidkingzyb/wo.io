@@ -105,7 +105,7 @@ woioBg.prototype={
     onloaded:function(cb){
         this.wo.scale.set(2.7,2.7,2.7);
         this.wo.position.set(0,-35,-40);
-        this.wo.rotation.x=degTorad(28);
+        this.wo.rotation.x=THREE.Math.degToRad(28);
         this.wo.add(this.head);
         this.wo.add(this.eye);
         this.scene.add(this.wo);
@@ -117,6 +117,3 @@ woioBg.prototype={
     }
 }
 
-function degTorad(deg){
-    return deg*Math.PI/180;
-}

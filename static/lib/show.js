@@ -22,7 +22,7 @@ var show=(function(){
 
         var twRX=new TWEEN.Tween(that.wo.rotation)
             .delay(5000)
-            .to({x:show.degTorad(-4)},2000)
+            .to({x:THREE.Math.degToRad(-4)},2000)
             .start();
         var twZ=new TWEEN.Tween(that.wo.position)
             .delay(5000)
@@ -82,7 +82,7 @@ var show=(function(){
     }
     show.prototype.resetWO=function(){
         this.woiobg.wo.position.set(0,-37,0);
-        this.woiobg.wo.rotation.set(show.degTorad(-4),0,0)
+        this.woiobg.wo.rotation.set(THREE.Math.degToRad(-4),0,0)
         this.woiobg.renderer.render(this.woiobg.scene,this.woiobg.camera);
     };
     show.prototype.resetMaterial=function(){
@@ -94,10 +94,10 @@ var show=(function(){
         var that=this.woiobg;
         that.wo.scale.set(2.7,2.7,2.7);
         that.wo.position.set(0,-35,-40);
-        that.wo.rotation.x=show.degTorad(28);
+        that.wo.rotation.x=THREE.Math.degToRad(28);
         that.renderer.render(that.scene,that.camera);
         var twRX=new TWEEN.Tween(that.wo.rotation)
-            .to({x:show.degTorad(-4)},2000)
+            .to({x:THREE.Math.degToRad(-4)},2000)
             .start();
         var twZ=new TWEEN.Tween(that.wo.position)
             .to({z:0,y:-37},2000)
@@ -198,9 +198,6 @@ var show=(function(){
     show.randomColor=function(){
         return parseInt(Math.random()*0xFFFFFF,16);
     };
-    show.degTorad=function(deg){
-        return deg*Math.PI/180;
-    };
     show.prototype.setEyeMaterial=function(c,material){
         var material=material||'Lambert';//Basic,Phong
         var materials=[new THREE['Mesh'+material+'Material']({color:c})];
@@ -262,7 +259,7 @@ var show=(function(){
         this.setHeadMaterial(headcolor||show.randomColor());
         this.setBgColor(bgcolor||show.randomColor());
         this.setWO('position',-2+Math.random()*4,-39+Math.random()*4,-2+Math.random()*4);
-        this.setWO('rotation',show.degTorad(-4-10+20*Math.random()),show.degTorad(-10+20*Math.random()),show.degTorad(-10+20*Math.random()))
+        this.setWO('rotation',THREE.Math.degToRad(-4-10+20*Math.random()),THREE.Math.degToRad(-10+20*Math.random()),THREE.Math.degToRad(-10+20*Math.random()))
         //show.showTitle('Pop.wo');
     };
     show.prototype.popShow=function(times){
