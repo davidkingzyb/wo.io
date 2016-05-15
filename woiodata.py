@@ -167,3 +167,19 @@ cvfail="""
 --------------------------------------------------------------
 """
 
+why="""
+==============================================
+-why WO.IO ?
+
+The development of user interface is
+ from low dimension to high dimension
+
+    Command Line --> GUI --> 3D
+
+So webgl is the future, this project
+is a attempt to build future website and
+user interface.
+
+try -help to find out how to use it.
+----------------------------------------------
+"""

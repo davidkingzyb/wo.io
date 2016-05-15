@@ -49,6 +49,7 @@ def dotty(tty):
     'cv':doResume,
     'clio':doClio,
     'cvfail':doCVFail,
+    'why':doWhy,
     }
 
     if len(ttyarr)>1:
@@ -272,6 +273,9 @@ def doResume(ttyarg=''):
 
 def doCVFail(ttyarg=''):
     return woiodata.cvfail
+
+def doWhy(ttyarg=''):
+    return woiodata.why
 
 
 def onError(ttyarg='default'):

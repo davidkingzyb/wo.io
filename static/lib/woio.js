@@ -26,7 +26,31 @@ setTimeout(function(){
     if(!isIOshow){
         switchIO();
     }
+
 },10000);
+
+function showTitle(title){
+    wtf.$('#title').innerHTML=title;
+    wtf.$('#title').setAttribute('class','');
+}
+
+function hideTitle(){
+    wtf.$('#title').innerHTML='W O . I O';
+    wtf.$('#title').setAttribute('class','hidden');
+}
+
+var alerttimer;
+function showAlert(alert,hidetime){
+    wtf.$('#loading').innerHTML=alert;
+    var hidetime=hidetime||3000;
+    if(alerttimer){
+        clearTimeout(alerttimer);
+    }
+    wtf.$('#loading').setAttribute('class','');
+    alerttimer=setTimeout(function(){
+        wtf.$('#loading').setAttribute('class','hidden');
+    },hidetime);
+}
 
 function doOutput(output){
     var script=/{{javascript:.*?}}/.exec(output);
@@ -99,6 +123,7 @@ var ISBGLOAD=false;
 
 var woiobg;
 try{
+    wtf.$('#loading').setAttribute('class','');
     wtf.loadScript('../static/lib/three.js',function(){
         ISTWEENLOAD=true;
         wtf.loadScript('../static/lib/OBJLoader.js',function(){
