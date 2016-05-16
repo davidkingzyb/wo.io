@@ -30,29 +30,42 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 |  |_____ |  |_____   _|  |_  |   o   ||  |_| ||  |___|    ___||  |_| ||  |___
 |________||________| |______|  \_____/ |______|\_____/|___|    |______|\_____/
 ==============================================================================
-2016/05/01 by DKZ https://davidkingzyb.github.io
+2016/05/06 by DKZ https://davidkingzyb.github.io
 
 """
-
-import clio.title
-import clio.list
-import clio.tabel
-import clio.tree
-import clio.chart
-import clio.ppt
-
-__all__=['title','list','tabel','tree','chart','ppt']
-
-dotitle=clio.title.dotitle
-dolist=clio.list.dolist
-dotabel=clio.tabel.dotabel
-dotree=clio.tree.dotree
-dojson=clio.tree.dojson
-dobar=clio.chart.dobar
-doppt=clio.ppt.doppt
-
-def dotext(text):
-    return text
-
-def dohr(length):
-    return '='*length+'\n'
+try: input = raw_input
+except NameError: pass
+def doppt(nowpage,pagearr):
+    inp=input()
+    if inp=='' or inp=='n' or inp=='next':
+        nowpage+=1
+        if nowpage<len(pagearr):
+            print(pagearr[nowpage])
+            doppt(nowpage,pagearr)
+        else:
+            nowpage-=1
+            print(pagearr[nowpage])
+            print('this is last page.')
+            doppt(nowpage,pagearr)
+    elif inp=='q' or inp=='quit':
+        print('power by CLIoutput , Thanks watching!')
+    elif inp=='p' or inp=='prev':
+        nowpage-=1
+        if nowpage>=0:
+            print(pagearr[nowpage])
+            doppt(nowpage,pagearr)
+        else:
+            nowpage=0
+            print(pagearr[nowpage])
+            print('this is first page.')
+            doppt(nowpage,pagearr)
+    elif inp=='g' or inp=='go':
+        pagenum=input()
+        pagenum=int(pagenum)-1
+        if pagenum<len(pagearr):
+            nowpage=pagenum
+            print(pagearr[nowpage])
+            doppt(nowpage,pagearr)
+        else:
+            print('this page is out of range.')
+            doppt(nowpage,pagearr)

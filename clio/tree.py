@@ -30,29 +30,45 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 |  |_____ |  |_____   _|  |_  |   o   ||  |_| ||  |___|    ___||  |_| ||  |___
 |________||________| |______|  \_____/ |______|\_____/|___|    |______|\_____/
 ==============================================================================
-2016/05/01 by DKZ https://davidkingzyb.github.io
+2016/05/04 by DKZ https://davidkingzyb.github.io
 
 """
 
-import clio.title
-import clio.list
-import clio.tabel
-import clio.tree
-import clio.chart
-import clio.ppt
+import json
+import re
 
-__all__=['title','list','tabel','tree','chart','ppt']
+def dojson(j):
+    output=json.dumps(j,sort_keys=True,indent=4,separators=(',',':'))
+    return output
 
-dotitle=clio.title.dotitle
-dolist=clio.list.dolist
-dotabel=clio.tabel.dotabel
-dotree=clio.tree.dotree
-dojson=clio.tree.dojson
-dobar=clio.chart.dobar
-doppt=clio.ppt.doppt
+def dotree(j):
+    output=json.dumps(j,sort_keys=True,indent=6,separators=('',':'))
+    output=re.sub('\n +?\[\n','\n',output)
+    output=re.sub('\n +?\{\n','\n',output)
+    output=re.sub('\n +?\}\n','\n',output)
+    output=re.sub('\n +?\]\n','\n',output)
+    output=re.sub('\[','',output)
+    output=re.sub('\{','',output)
+    output=re.sub('\}','',output)
+    output=re.sub('\]','',output)
+    def addleaf(matched):
+        m=matched.group(0)
+        return '|---'+m[-1:]
+    output=re.sub('    \S',addleaf,output)
+    return output
 
-def dotext(text):
-    return text
 
-def dohr(length):
-    return '='*length+'\n'
+if __name__ == '__main__':
+
+    j={
+        'code':0,
+        'msg':'hello',
+        'result':{
+            'a':1,
+            'b':2,
+            'c':[1,2,3],
+        }
+    }
+    print(dojson(j))
+    print(dotree(j))
+
