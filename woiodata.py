@@ -88,7 +88,7 @@ wo="""
 
     |%(EyeFragShader)s   |%(EyeFSRandom)s     |%(HeadFSRandom)s
 
-    |%(popShow)s         |%(popWO)s           
+    |%(popShow)s         |%(popWO)s           |%(asciiWO)s 
 
     |%(HeadUp)s          |%(rotateWO)s   
 

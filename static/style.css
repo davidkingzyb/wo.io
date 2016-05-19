@@ -6,6 +6,12 @@ body {
 pre{
     margin:0;
 }
+#Ascii-output{
+    z-index: 5;
+    position:fixed;
+    top:0px;
+    left:0px;
+}
 #WebGL-output{
     z-index: 1;
     position:fixed;

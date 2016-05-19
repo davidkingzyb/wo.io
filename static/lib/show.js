@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////
 //  2016/04/15 by DKZ https://davidkingzyb.github.io
 var ISTBCTRLRUN=false;
+var ISAELOADED=false;
 var stats;
 var show=(function(){
     function show(woiobg){
@@ -41,6 +42,26 @@ var show=(function(){
             }else{
                 twZ.stop();
             }
+        }
+    };
+    show.prototype.asciiWO=function(){
+        if(!ISAELOADED){
+            wtf.loadScript('../static/lib/AsciiEffect.js',function(){
+                ISAELOADED=true;
+                showing.setBgColor(0xFFFFFF);
+                wtf.$('#WebGL-output').setAttribute('class','hidden');
+                this.woiobg['effect']=new THREE.AsciiEffect(this.woiobg.renderer);
+                this.woiobg['effect'].setSize(window.innerWidth,window.innerHeight);
+                wtf.$('#Ascii-output').appendChild(this.woiobg['effect'].domElement);
+                this.woiobg['effect'].render(this.woiobg.scene,this.woiobg.camera);
+            })
+        }else{
+            showing.setBgColor(0xFFFFFF);
+            wtf.$('#WebGL-output').setAttribute('class','hidden');
+            this.woiobg['effect']=new THREE.AsciiEffect(this.woiobg.renderer);
+            this.woiobg['effect'].setSize(window.innerWidth,window.innerHeight);
+            wtf.$('#Ascii-output').appendChild(this.woiobg['effect'].domElement);   
+            this.woiobg['effect'].render(this.woiobg.scene,this.woiobg.camera);
         }
     };
     show.StatsInit=function(){
