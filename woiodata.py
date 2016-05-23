@@ -12,6 +12,8 @@
 2016/05/06 by DKZ https://davidkingzyb.github.io
 
 """
+def wrapTag(tag,value,attr):
+    return '<'+tag+' '+attr+'>'+value+'</'+tag+'>' 
 
 urlmap={
     'home':'http://davidkingzyb.github.io/home.html',
@@ -57,21 +59,61 @@ help="""
 
 projls="""
 ================= Project List ====================
--home                :DKZ's HOME
--blog                :DKZ's BLOG 
+-%(home)s                :DKZ's HOME
+-%(blog)s                :DKZ's BLOG 
 *wo.io               :WO.IO
 --------------------------------------------------   
--cubex3              :CubeX3 a indie game by DKZ
--duibai [dialogue]   :search movie dialogue 
--zengxin             :DKZ's father paint page
+-%(cubext)s              :CubeX3 a indie game by DKZ
+-%(duibai)s [dialogue]   :search movie dialogue 
+-%(zengxin)s             :DKZ's father paint page
 ---------------------- github --------------------
--canvasTrigger       :a canvas chart lib
--wtf/webtoolfunction :useful web tool function lib
--commentTitle        :big comment title 
--egretInit           :egret tool lib
--clio                :Command Line Interface Output
+-%(canvasTrigger)s       :a canvas chart lib
+-%(wtftwebtoolfunction)s :useful web tool function lib
+-%(commentTitle)s        :big comment title 
+-%(egretInit)s           :egret tool lib
+-%(clio)s                :Command Line Interface Output
 ===================================================
-"""
+"""%{
+    'home':wrapTag('a','home','href="'+urlmap['home']+'"'),
+    'blog':wrapTag('a','blog','href="'+urlmap['blog']+'"'),
+    'cubext':wrapTag('a','cubex3','href="'+urlmap['cubext']+'"'),
+    'duibai':wrapTag('a','duibai','href="'+urlmap['duibai']+'"'),
+    'zengxin':wrapTag('a','zengxin','href="'+urlmap['zengxin']+'"'),
+    'egretInit':wrapTag('a','egretInit','href="'+urlmap['egretInit']+'"'),
+    'canvasTrigger':wrapTag('a','canvasTrigger','href="'+urlmap['canvasTrigger']+'"'),
+    'commentTitle':wrapTag('a','commentTitle','href="'+urlmap['commentTitle']+'"'),
+    'wtftwebtoolfunction':wrapTag('a','wtf/webtoolfunction','href="'+urlmap['wtf']+'"'),
+    'clio':wrapTag('a','clio','href="'+urlmap['clio']+'"')
+}
+
+projls_zh="""
+==================== 项目列表 ======================
+-%(home)s                :我的主页
+-%(blog)s                :我的博客 
+*wo.io               :WO.IO
+--------------------------------------------------   
+-%(cubext)s              :一个独立游戏
+-%(duibai)s [dialogue]   :台词查询分享 
+-%(zengxin)s             :爸爸的主页
+---------------------- github --------------------
+-%(canvasTrigger)s       :一个canvas图表工具
+-%(wtftwebtoolfunction)s :一个web方法库
+-%(commentTitle)s        :用来添加证书和一个大标题 
+-%(egretInit)s           :快速构建egret游戏
+-%(clio)s                :命令行输出工具
+===================================================
+"""%{
+    'home':wrapTag('a','home','href="'+urlmap['home']+'"'),
+    'blog':wrapTag('a','blog','href="'+urlmap['blog']+'"'),
+    'cubext':wrapTag('a','cubex3','href="'+urlmap['cubext']+'"'),
+    'duibai':wrapTag('a','duibai','href="'+urlmap['duibai']+'"'),
+    'zengxin':wrapTag('a','zengxin','href="'+urlmap['zengxin']+'"'),
+    'egretInit':wrapTag('a','egretInit','href="'+urlmap['egretInit']+'"'),
+    'canvasTrigger':wrapTag('a','canvasTrigger','href="'+urlmap['canvasTrigger']+'"'),
+    'commentTitle':wrapTag('a','commentTitle','href="'+urlmap['commentTitle']+'"'),
+    'wtftwebtoolfunction':wrapTag('a','wtf/webtoolfunction','href="'+urlmap['wtf']+'"'),
+    'clio':wrapTag('a','clio','href="'+urlmap['clio']+'"')
+}
 
 contact="""
 DKZ
@@ -138,6 +180,40 @@ davidkingzyb@qq.com     |________/|__|  \__\/________|
                      &copy;2016 by DKZ
 """
 
+resume_zh="""
+ 曾 彦博                 `_______  `__   __  `_______  
+----------------------  |   __  \ |  | /  / |___   /  
+website.                |  |  \  \|  |/  /     /  /   
+davidkingzyb.github.io  |  |  |  ||   _  \    /  /    
+email.                  |  |__|  ||  | \  \  /  /____ 
+davidkingzyb@qq.com     |________/|__|  \__\/________|
+========================================================
+  _____      ___  __  __ 
+ /  _  \ ___|   ||  | | |   华南理工大学 
+/  ____/|  ___  ||  |_| |     电子商务         2011-2015
+\______/|_______||______|                     管理学学士
+========================================================
+  _____   __  __ _______  
+ /  _  \ \  \/_/|   __  | 2011-2014
+/  ____/ _\  \  |    ___| 百步梯 美工部 
+\______//_/\__\ |___|      * 部长
+                           - 海报设计                
+-------------------------------------------------------
+2015.4-12    每日Q游戏             * 前端开发工程师
+              - HTML5 游戏主程
+-------------------------------------------------------
+2016.3-      速聘信息技术有限公司    * 前端开发工程师
+              - 网页前端开发 架构                             
+=========================================================
+                             __                   
+ _______  __  __  _____     |__|  输入 
+|   __  ||  |/_/ /     \    |  |       -lsproject
+|    ___||   |  |   o   |___|  | 
+|___|    |___|   \_____/ \_____/          查看项目列表
+=========================================================
+                     &copy;2016 by DKZ
+"""
+
 All="""
     |%(home)s            |%(blog)s
 
@@ -183,3 +259,7 @@ user interface.
 try -help to find out how to use it.
 ----------------------------------------------
 """
+
+
+
+

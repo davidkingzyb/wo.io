@@ -90,6 +90,7 @@ use -help find useable command""",
 def doLsProject(ttyarg='default'):
     switch={
     'default':woiodata.projls,
+    'zh':woiodata.projls_zh,
     }
     return switch.get(ttyarg,switch['default'])
 
@@ -270,7 +271,10 @@ def doEval(ttyarg='alert("try -eval alert(“hello”)")'):
     #return 'this is a test command'
 
 def doResume(ttyarg=''):
-    resume=woiodata.resume
+    if ttyarg=='zh':
+        resume=woiodata.resume_zh
+    else:
+        resume=woiodata.resume
     return resume
 
 def doCVFail(ttyarg=''):
