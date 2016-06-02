@@ -20,7 +20,20 @@ from flask import jsonify
 #from flask import abort
 #from flask import url_for
 #from flask import Markup
-#from flask import make_response
+from functools import wraps
+from flask import make_response
+
+
+def allow_cross_domain(fun):
+    @wraps(fun)
+    def wrapper_fun(*args, **kwargs):
+        rst = make_response(fun(*args, **kwargs))
+        rst.headers['Access-Control-Allow-Origin'] = '*'
+        rst.headers['Access-Control-Allow-Methods'] = 'PUT,GET,POST,DELETE'
+        allow_headers = "Referer,Accept,Origin,User-Agent"
+        rst.headers['Access-Control-Allow-Headers'] = allow_headers
+        return rst
+    return wrapper_fun
 
 app=Flask(__name__)
 
@@ -34,6 +47,17 @@ def io():
     output=doio.dotty(tty)
     resp={'flag':'ok','output':output}
     return jsonify(resp)
+
+@app.route('/clio',methods=['POST','GET'])
+@allow_cross_domain
+def clio():
+    obj=request.values.get('obj','')
+    func=request.values.get('func','')
+    ttyarg=func+'('+obj+')'
+    output=doio.doClio(ttyarg)
+    resp={'flag':'ok','output':output}
+    return jsonify(resp)
+
 
 @app.route('/home')
 def home():

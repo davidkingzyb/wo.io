@@ -172,9 +172,26 @@ def doWebToolFunction(ttyarg='default'):
 def doClio(ttyarg='default'):
     t=doCT('CLIoutput')
     switch={
-    'default':t+'\n --------------------------------- \n'+'Command Line Interface Output\n- a python lib for making CUI\n'+wrapTag('a',urlmap['clio'],'href="'+urlmap['clio']+'"')
+    'default':t+'\n --------------------------------- \n'+'Command Line Interface Output\n- a python lib for making CUI\ntry -clio dotree(json)...\n'+wrapTag('a',urlmap['clio'],'href="'+urlmap['clio']+'"')
     }
-    return switch.get(ttyarg,switch['default'])
+    if ttyarg=='default':
+        return switch.get(ttyarg,switch['default'])
+    else:
+        try:
+            args=ttyarg.split('(')
+            args[1]=args[1][:-1]
+            print(args)
+            switchargs={
+            'dolist':clio.dolist,
+            'dojson':clio.dojson,
+            'dotree':clio.dotree,
+            'dotabel':clio.dotabel,
+            'dobar':clio.dobar
+            }
+            return switchargs.get(args[0])(json.loads(args[1]))
+        except:  
+            return 'clio error'
+    
 
 def doWelcome(ttyarg='default'):
     Welcome=doCT('Welcome')

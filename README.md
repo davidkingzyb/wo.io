@@ -12,20 +12,24 @@
 
 ![](static/img/zaowuurl.jpg)
 
-##IO
+##CLIoutput io
 
-- url http://dkzhome.sinapp.com/io
+see project [CLIoutput](https://github.com/davidkingzyb/CLIoutput)
+
+- url http://dkzhome.sinapp.com/clio
 
 - method POST GET
 
-- param tty:str {tty:'welcome'} ?tty=welcome
+- param
+    - func : dotree
+    - obj : {"a":1,"b":[1,2]}
 
 - response
 
 ```
 {
   "flag": "ok",
-  "output": " __    __                                                   \n|  |  |  |         __                                       \n|  |/\\|  |  _____ |  |   ______    _____   ___  ___   _____ \n|        | /  _  \\|  |  |   ___|  /     \\ |   \\/   | /  _  \\\n|   /\\   |/  ____/|  |_ |  |____ |   o   ||        |/  ____/\n|__/  \\__|\\______/|____||_______| \\_____/ |__|\\/|__|\\______/\n                                                               \n _                                                 __          \n| \\_     _____         __    __   _____           |__|  _____  \n|   _|  /     \\       |  |/\\|  | /     \\   ____   |  | /     \\ \n|  |___|   o   |      |        ||   o   | |    |  |  ||   o   |\n\\_____/ \\_____/       |___/\\___| \\_____/  |____|  |__| \\_____/ \n\n----------------------------------------- \ndate: 2016/03/27    &copy 2016 by DKZ\ninput -help find help infomation"
+  "output": "\n  |---\"a\":1\n  |---\"b\":\n        |---1\n        |---2\n"
 }
 ```
 
