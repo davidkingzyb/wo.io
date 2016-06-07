@@ -13,10 +13,10 @@ wtf.$('#title').setAttribute('class','animated fadeOut');
 var isIOshow=false;
 function switchIO(){
     if(isIOshow){
-        wtf.$('#terminal').setAttribute('class','hidden');
+        wtf.$('#woioterminal').setAttribute('class','hidden');
         isIOshow=false;
     }else{
-        wtf.$('#terminal').setAttribute('class','');
+        wtf.$('#woioterminal').setAttribute('class','');
         wtf.$('#input').focus();
         isIOshow=true;
     }  
@@ -168,7 +168,11 @@ function showOn(){
 }
 
 
-
+window.onkeydown=function(e){
+    if (e.keyCode === 120 || e.which === 120) {
+        switchIO();
+    }
+}
 
 
 

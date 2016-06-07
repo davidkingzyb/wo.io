@@ -41,7 +41,7 @@ pre{
     padding:15%;
 }
 @media only screen and (min-width: 850px){
-    #terminal{
+    #woioterminal{
         position:absolute;
         width:800px;
         height:550px;
@@ -54,7 +54,7 @@ pre{
     }
 }
 @media only screen and (max-width: 850px){
-    #terminal{
+    #woioterminal{
         position:absolute;
         height:85%;
         bottom:50%;
@@ -65,17 +65,17 @@ pre{
         overflow:auto;
     }
 }
-#terminal>pre{
+#woioterminal>pre{
     position:absolute;
     bottom:10px;
     margin-left: 10px;
     margin-right:10px;
     
 }
-#terminal pre a{
+#woioterminal pre a{
     color:white;
 }
-#terminal pre a:hover{
+#woioterminal pre a:hover{
     color:#222;
 }
 
