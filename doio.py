@@ -50,6 +50,8 @@ def dotty(tty):
     'clio':doClio,
     'cvfail':doCVFail,
     'why':doWhy,
+    'shanhai':doShanhai,
+    'pccold':doPccold,
     }
 
     if len(ttyarr)>1:
@@ -139,6 +141,13 @@ def doCubex3(ttyarg='default'):
     }
     return switch.get(ttyarg,switch['default'])
 
+def doShanhai(ttyarg='default'):
+    t=doCT('shanhai')
+    switch={
+    'default':t+'\n --------------------------------- \n'+'a indie game by DKZ \n- land steam Greenlight'+'\n<a href="'+urlmap['shanhai']+'">'+urlmap['shanhai']+'</a>'
+    }
+    return switch.get(ttyarg,switch['default'])
+
 def doEgretInit(ttyarg='default'):
     t=doCT('eI')
     switch={
@@ -166,6 +175,13 @@ def doWebToolFunction(ttyarg='default'):
     t=doCT('wtf')
     switch={
     'default':t+'\n --------------------------------- \n'+'some useful web tool function \n- wtf.js a web tool function javascript lib \n- init.less css init \n- spiderman.py a simple web spider \n- runServer.py a simple web server \n- wtf some useful python web tool function\n- bd.js a simple MVVM web framework\n'+wrapTag('a',urlmap['wtf'],'href="'+urlmap['wtf']+'"')
+    }
+    return switch.get(ttyarg,switch['default'])
+
+def doPccold(ttyarg='default'):
+    t=doCT('PcCold')
+    switch={
+    'default':t+'\n --------------------------------- \n'+'douyutv script\n'+wrapTag('a',urlmap['pccold'],'href="'+urlmap['pccold']+'"')
     }
     return switch.get(ttyarg,switch['default'])
 
@@ -236,7 +252,9 @@ def doAll(ttyarg='default'):
     'all':wrapTag('a','all','href="javascript:onAClick(\'all\')"'),
     'help':wrapTag('a','help','href="javascript:onAClick(\'help\')"'),
     'wo':wrapTag('a','wo','href="javascript:onAClick(\'wo\')"'),
-    'CLIO':wrapTag('a','CLIO','href="'+urlmap['clio']+'"')
+    'CLIO':wrapTag('a','CLIO','href="'+urlmap['clio']+'"'),
+    'shanhai':wrapTag('a','shanhai','href="'+urlmap['shanhai']+'"'),
+    'pccold':wrapTag('a','pccold','href="'+urlmap['pccold']+'"'),
 }
     }
     return switch.get(ttyarg,switch['default'])
@@ -288,10 +306,10 @@ def doEval(ttyarg='alert("try -eval alert(“hello”)")'):
     #return 'this is a test command'
 
 def doResume(ttyarg=''):
-    if ttyarg=='zh':
-        resume=woiodata.resume_zh
-    else:
+    if ttyarg=='en':
         resume=woiodata.resume
+    else:
+        resume=woiodata.resume_zh
     return resume
 
 def doCVFail(ttyarg=''):
