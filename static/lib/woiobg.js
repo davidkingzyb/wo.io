@@ -10,6 +10,8 @@
 //  2016/03/05 by DKZ https://davidkingzyb.github.io
 var ISEYELOAD=false;
 var ISHEADLOAD=false;
+// var HOST='http://okwv9qjdy.bkt.clouddn.com/';
+var HOST='/static/res/';//test
 
 var woioBg=function(){
     this.scene=new THREE.Scene();
@@ -72,7 +74,7 @@ woioBg.prototype={
     loadHead:function(filename,cb){
         var loader=new THREE.OBJLoader();
         var that=this;
-        loader.load('http://okwv9qjdy.bkt.clouddn.com/'+filename+'.obj',function(o){ 
+        loader.load(HOST+filename+'.obj',function(o){ 
             wtf.$('#loading').setAttribute('class','hidden');
             var materials=[new THREE.MeshLambertMaterial({color:0x999999})];
             var geom=o.children[0].geometry
@@ -92,7 +94,7 @@ woioBg.prototype={
     loadEye:function(){
         var loader=new THREE.OBJLoader();
         var that=this;
-        loader.load('http://okwv9qjdy.bkt.clouddn.com/woioEye.obj',function(o){
+        loader.load(HOST+'woioEye.obj',function(o){
             var materials=[new THREE.MeshLambertMaterial({color:0x666666})];
             var geom=o.children[0].geometry
             that['eye_geom']=geom;

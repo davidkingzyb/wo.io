@@ -10,7 +10,6 @@
 ###############################################
 #  2016/03/21 by DKZ https://davidkingzyb.github.io
 import clio
-import spiderman
 import json
 import datetime
 import woiodata
@@ -113,25 +112,14 @@ def doBlog(ttyarg='default'):
     }
     return switch.get(ttyarg,switch['default'])
 
+# todo add old duibai
 def doDuibai(ttyarg='default'):
     t=doCT('duibai')
     r=t+'\n --------------------------------- \n'+'- Movie dialogue search and share website\n- Using spider collect subtitle files and add them to database\n'+'search movie dialogue from duibai \ntry -duibai [dialogue] \n<a href="'+urlmap['duibai']+'">'+urlmap['duibai']+'</a>'
     if ttyarg=='default':
         return r
     else:
-        duibai=spiderman.post('http://dialogue.sinaapp.com/io',{'dialogue':ttyarg.encode('UTF-8')})
-        d=json.loads(duibai)
-        if d['flag']=='ok':
-            output="""
-name:%(name)s
-director:%(director)s
-actor:%(actor)s 
----------------------------"""%d
-            for x in d['dialogue']:
-                output=output+'\n'+x
-            return output
-        else:
-            return 'cant find dialogue please try other key word or visit '+wrapTag('a','duibai','href="'+urlmap['duibai']+'"')
+        return 'cant find dialogue please try other key word or visit '+wrapTag('a','duibai','href="'+urlmap['duibai']+'"')
 
 
 def doCubex3(ttyarg='default'):
